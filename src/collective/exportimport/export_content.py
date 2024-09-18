@@ -20,8 +20,6 @@ from Products.CMFPlone.interfaces.constrains import ISelectableConstrainTypes
 from Products.CMFPlone.utils import safe_unicode, isExpired
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from eea.versions.interfaces import IGetVersions
-from eea.workflow.interfaces import IObjectArchived
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.i18n import translate
@@ -35,6 +33,16 @@ import os
 import pkg_resources
 import six
 import tempfile
+
+try:
+    from eea.versions.interfaces import IGetVersions
+except ImportError:
+    IGetVersions = None
+
+try:
+    from eea.workflow.interfaces import IObjectArchived
+except ImportError:
+    IObjectArchived = None
 
 try:
     pkg_resources.get_distribution("Products.Archetypes")
@@ -93,6 +101,10 @@ LISTING_VIEW_MAPPING = {  # OLD (AT and old DX) : NEW
     "thumbnail_view": "album_view",
     "view": "listing_view",
 }
+
+
+with open(os.path.dirname(__file__) + '/resources/mandatory.json') as file:
+    mandatory = json.load(file)
 
 
 class ExportContent(BrowserView):
@@ -369,12 +381,21 @@ class ExportContent(BrowserView):
                 continue
 
             try:
+                is_mandatory = True if brain.UID in mandatory else False
+
+                if brain.UID in ["93ffd36e5350449dbe1e1efa06dcea8d"]:
+                    continue
+
+                if not is_mandatory and brain.review_state != 'published':
+                    continue
+
                 obj = brain.getObject()
-                if IObjectArchived.providedBy(obj):
+
+                if IObjectArchived and IObjectArchived.providedBy(obj):
                     continue
                 if isExpired(obj):
                     continue
-                if not IGetVersions(obj).isLatest():
+                if IGetVersions and not IGetVersions(obj).isLatest():
                     continue
                 if obj.getLanguage() != 'en':
                     continue

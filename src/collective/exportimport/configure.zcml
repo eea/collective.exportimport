@@ -140,6 +140,22 @@
       permission="cmf.ManagePortal"
       />
 
+  <browser:page
+      name="export_report"
+      for="zope.interface.Interface"
+      class=".export_other.ExportReport"
+      template="templates/export_other.pt"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
+      name="export_image"
+      for="zope.interface.Interface"
+      class=".export_other.ExportImage"
+      template="templates/export_other.pt"
+      permission="cmf.ManagePortal"
+      />
+
   <!-- Serializers -->
   <adapter zcml:condition="installed Products.Archetypes"
       factory=".serializer.ATFileFieldSerializer" />
@@ -296,5 +312,14 @@
       template="templates/export_other.pt"
       permission="cmf.ManagePortal"
       />
+
+  <browser:page
+    name="import_deferred"
+    for="zope.interface.Interface"
+    class=".import_content.ImportDeferred"
+    template="templates/import_deferred.pt"
+    permission="cmf.ManagePortal"
+    />
+
 
 </configure>

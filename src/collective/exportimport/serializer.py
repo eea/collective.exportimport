@@ -73,7 +73,8 @@ def get_blob_path(blob):
     connection = blob._p_jar
     connection.setstate(blob)
     db = connection.db()
-    return db.storage.fshelper.layout.getBlobFilePath(blob._p_oid, blob._p_serial)
+    return db.storage.fshelper.layout.getBlobFilePath(
+        blob._p_oid, blob._p_serial)
 
 
 # Custom Serializers for Dexterity
@@ -186,7 +187,8 @@ class ChoiceFieldSerializer(DefaultFieldSerializer):
         if IField.providedBy(self.field):
             self.field = self.field.bind(self.context)
         value = self.get_value()
-        if value is not None and IVocabularyTokenized.providedBy(self.field.vocabulary):
+        if value is not None and IVocabularyTokenized.providedBy(
+                self.field.vocabulary):
             try:
                 self.field.vocabulary.getTerm(value)
             except LookupError:
@@ -241,13 +243,14 @@ if HAS_AT:
             image = self.field.get(self.context)
             if not image:
                 return None
-            data = image.data.data if isinstance(image.data, Pdata) else image.data
-            if len(data) > IMAGE_SIZE_WARNING:
-                logger.info(
-                    u"Large image for {}: {}".format(
-                        self.context.absolute_url(), size(len(data))
-                    )
-                )
+            data = image.data.data if isinstance(
+                image.data, Pdata) else image.data
+            # if len(data) > IMAGE_SIZE_WARNING:
+            #     logger.info(
+            #         u"Large image for {}: {}".format(
+            #             self.context.absolute_url(), size(len(data))
+            #         )
+            #     )
             result = {
                 "filename": self.field.getFilename(self.context),
                 "content-type": image.getContentType(),
@@ -273,12 +276,12 @@ if HAS_AT:
                 if isinstance(file_obj.data, Pdata)
                 else file_obj.data
             )
-            if len(data) > FILE_SIZE_WARNING:
-                logger.info(
-                    u"Large file for {}: {}".format(
-                        self.context.absolute_url(), size(len(data))
-                    )
-                )
+            # if len(data) > FILE_SIZE_WARNING:
+            #     logger.info(
+            #         u"Large file for {}: {}".format(
+            #             self.context.absolute_url(), size(len(data))
+            #         )
+            #     )
 
             result = {
                 "filename": self.field.getFilename(self.context),
@@ -295,13 +298,14 @@ if HAS_AT:
             image = self.field.get(self.context)
             if not image:
                 return None
-            data = image.data.data if isinstance(image.data, Pdata) else image.data
-            if len(data) > IMAGE_SIZE_WARNING:
-                logger.info(
-                    u"Large image for {}: {}".format(
-                        self.context.absolute_url(), size(len(data))
-                    )
-                )
+            data = image.data.data if isinstance(
+                image.data, Pdata) else image.data
+            # if len(data) > IMAGE_SIZE_WARNING:
+            #     logger.info(
+            #         u"Large image for {}: {}".format(
+            #             self.context.absolute_url(), size(len(data))
+            #         )
+            #     )
             result = {
                 "filename": self.field.getFilename(self.context),
                 "content-type": image.getContentType(),
@@ -322,12 +326,12 @@ if HAS_AT:
                 if isinstance(file_obj.data, Pdata)
                 else file_obj.data
             )
-            if len(data) > FILE_SIZE_WARNING:
-                logger.info(
-                    u"Large File for {}: {}".format(
-                        self.context.absolute_url(), size(len(data))
-                    )
-                )
+            # if len(data) > FILE_SIZE_WARNING:
+            #     logger.info(
+            #         u"Large File for {}: {}".format(
+            #             self.context.absolute_url(), size(len(data))
+            #         )
+            #     )
             result = {
                 "filename": self.field.getFilename(self.context),
                 "content-type": self.field.getContentType(self.context),
@@ -393,7 +397,8 @@ if HAS_AT:
                 mimetype = self.field.getContentType(self.context)
                 if mimetype == "text/html":
                     # cleanup crazy html but keep links with resolveuid
-                    transforms = getToolByName(self.context, "portal_transforms")
+                    transforms = getToolByName(
+                        self.context, "portal_transforms")
                     data = transforms.convertTo(
                         "text/x-html-safe", data, mimetype=mimetype
                     ).getData()
@@ -437,7 +442,8 @@ if HAS_AT and HAS_PAC:
             for operator in new_operators:
                 if operator not in selection:
                     # just a dummy method to pass validation
-                    selection[operator] = {"operation": "collective.exportimport"}
+                    selection[operator] = {
+                        "operation": "collective.exportimport"}
 
             # Inject any operator for some fields
             any_operator = "plone.app.querystring.operation.selection.any"
@@ -448,9 +454,8 @@ if HAS_AT and HAS_PAC:
                 "review_state",
             ]
             for field in fields_with_any_operator:
-                operations = registry["plone"]["app"]["querystring"]["field"][field][
-                    "operations"
-                ]
+                operations = registry["plone"]["app"]["querystring"][
+                    "field"][field]["operations"]
                 if any_operator not in operations:
                     registry["plone"]["app"]["querystring"]["field"][field][
                         "operations"
@@ -460,9 +465,8 @@ if HAS_AT and HAS_PAC:
             all_operator = "plone.app.querystring.operation.selection.all"
             fields_with_any_operator = ["Subject"]
             for field in fields_with_any_operator:
-                operations = registry["plone"]["app"]["querystring"]["field"][field][
-                    "operations"
-                ]
+                operations = registry["plone"]["app"]["querystring"][
+                    "field"][field]["operations"]
                 if all_operator not in operations:
                     registry["plone"]["app"]["querystring"]["field"][field][
                         "operations"
@@ -665,3 +669,7 @@ else:
     def long_converter(value):
         # same as default_converter for py3
         return value
+
+
+# /www/en/sandbox/migration-of-maps-and-graphs-to-new-plone-6/30-european-countries-sent-their-1/map1-2_69336-monitoring-reporting-and-evaluation.png
+# /www/en/sandbox/migration-of-maps-and-graphs-to-new-plone-6/absolute-change-of-ghg-emissions-3/absolute-change-of-ghg-emissions

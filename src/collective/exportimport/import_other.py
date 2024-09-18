@@ -69,7 +69,6 @@ logger = logging.getLogger(__name__)
 
 DISCUSSION_ANNOTATION_KEY = "plone.app.discussion:conversation"
 
-
 if HAS_PAM:  # noqa: C901
 
     class ImportTranslations(BrowserView):
@@ -165,7 +164,8 @@ if HAS_PAM:  # noqa: C901
             )
         )
         try:
-            ITranslationManager(obj).register_translation(language, translation)
+            ITranslationManager(obj).register_translation(
+                language, translation)
         except TypeError as e:
             logger.info(u"Item is not translatable: {}".format(e))
 
@@ -201,7 +201,8 @@ class ImportMembers(BrowserView):
             else:
                 groups = self.import_groups(data["groups"])
                 members = self.import_members(data["members"])
-                msg = _(u"Imported {} groups and {} members").format(groups, members)
+                msg = _(u"Imported {} groups and {} members").format(
+                    groups, members)
                 api.portal.show_message(msg, self.request)
             if return_json:
                 msg = {"state": status, "msg": msg}
@@ -248,15 +249,16 @@ class ImportMembers(BrowserView):
         for item in data:
             username = item["username"]
             if api.user.get(username=username) is not None:
-                logger.error(u"Skipping: User {} already exists!".format(username))
+                logger.error(
+                    u"Skipping: User {} already exists!".format(username))
                 continue
             password = item.pop("password")
             roles = item.pop("roles")
             groups = item.pop("groups")
             if not item["email"]:
                 logger.info(
-                    u"Skipping user {} without email: {}".format(username, item)
-                )
+                    u"Skipping user {} without email: {}".format(
+                        username, item))
                 continue
             try:
                 pr.addMember(username, password, roles, [], item)
@@ -417,10 +419,12 @@ class ImportLocalRoles(BrowserView):
             if item.get("localroles"):
                 localroles = item["localroles"]
                 for userid in localroles:
-                    obj.manage_setLocalRoles(userid=userid, roles=localroles[userid])
+                    obj.manage_setLocalRoles(
+                        userid=userid, roles=localroles[userid])
                 logger.debug(
-                    u"Set roles on {}: {}".format(obj.absolute_url(), localroles)
-                )
+                    u"Set roles on {}: {}".format(
+                        obj.absolute_url(),
+                        localroles))
             if item.get("block"):
                 obj.__ac_local_roles_block__ = 1
                 logger.debug(
@@ -439,7 +443,8 @@ class ImportLocalRoles(BrowserView):
             logger.info("Reindexing Security")
             catalog = api.portal.get_tool("portal_catalog")
             pghandler = ZLogHandler(1000)
-            catalog.reindexIndex("allowedRolesAndUsers", None, pghandler=pghandler)
+            catalog.reindexIndex("allowedRolesAndUsers",
+                                 None, pghandler=pghandler)
         return results
 
 
@@ -542,10 +547,14 @@ class ImportDefaultPages(BrowserView):
                     obj = api.portal.get()
                 else:
                     continue
-            if "default_page_uuid" in item and item.get("default_page_uuid", None):
-                default_page_obj = api.content.get(UID=item["default_page_uuid"])
+            if "default_page_uuid" in item and item.get(
+                    "default_page_uuid", None):
+                default_page_obj = api.content.get(
+                    UID=item["default_page_uuid"])
                 if not default_page_obj:
-                    logger.info("Default page missing: %s", item["default_page_uuid"])
+                    logger.info(
+                        "Default page missing: %s", item
+                        ["default_page_uuid"])
                     continue
                 default_page = default_page_obj.id
             else:
@@ -567,9 +576,8 @@ class ImportDefaultPages(BrowserView):
                 obj.setDefaultPage(default_page.encode("utf-8"))
             else:
                 obj.setDefaultPage(default_page)
-            logger.debug(
-                u"Set %s as default page for %s", default_page, obj.absolute_url()
-            )
+            logger.debug(u"Set %s as default page for %s",
+                         default_page, obj.absolute_url())
             results += 1
         return results
 
@@ -623,7 +631,9 @@ class ImportDiscussion(BrowserView):
                 comment = Comment()
                 comment_id = int(item["comment_id"])
                 comment.comment_id = comment_id
-                comment.creation_date = dateutil.parser.parse(item["creation_date"])
+                comment.creation_date = dateutil.parser.parse(
+                    item
+                    ["creation_date"])
                 comment.modification_date = dateutil.parser.parse(
                     item["modification_date"]
                 )
@@ -661,9 +671,11 @@ class ImportDiscussion(BrowserView):
                 # Add the annotation if not already done
                 annotions = IAnnotations(obj)
                 if DISCUSSION_ANNOTATION_KEY not in annotions:
-                    annotions[DISCUSSION_ANNOTATION_KEY] = aq_base(conversation)
+                    annotions[DISCUSSION_ANNOTATION_KEY] = aq_base(
+                        conversation)
                 added += 1
-            logger.info("Added {} comments to {}".format(added, obj.absolute_url()))
+            logger.info("Added {} comments to {}".format(
+                added, obj.absolute_url()))
             results += added
 
         return results
@@ -761,7 +773,8 @@ def register_portlets(obj, item):
                 settings["visible"] = visible
 
             # 2. Apply portlet settings
-            portlet_interface = getUtility(IPortletTypeInterface, name=portlet_type)
+            portlet_interface = getUtility(
+                IPortletTypeInterface, name=portlet_type)
             for property_name, value in assignment_data.items():
                 # For core portlets a path changed to uuid between Plone 4 and 5
                 migration_mappings = [
@@ -842,7 +855,9 @@ def register_portlets(obj, item):
         if not manager:
             logger.info("No portlet manager {}".format(manager_name))
             continue
-        assignable = queryMultiAdapter((obj, manager), ILocalPortletAssignmentManager)
+        assignable = queryMultiAdapter(
+            (obj, manager),
+            ILocalPortletAssignmentManager)
         if status.lower() == "block":
             assignable.setBlacklistStatus(category, True)
         elif status.lower() == "show":

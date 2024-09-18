@@ -1,0 +1,1997 @@
+{
+  "15560eab-79c7-49bc-966e-9b9eb39fabee": {
+    "@layout": "2ae268f5-a8c3-4e52-b75f-416607e50f83",
+    "@type": "dividerBlock",
+    "block": "a7b69ed1-25a1-46e9-ad96-06182da24d56",
+    "hidden": true,
+    "section": true,
+    "styles": {}
+  },
+  "36d6a584-ebbe-4944-8423-270579a47877": {
+    "@layout": "efd933d3-adad-4a24-a9bb-69578d939f94",
+    "@type": "slate",
+    "block": "bc5cb5d5-6c13-497f-90f0-6d6da25a6dd3",
+    "plaintext": "",
+    "value": [
+      {
+        "children": [
+          {
+            "text": ""
+          }
+        ],
+        "type": "p"
+      }
+    ]
+  },
+  "4f515216-b0f5-4124-86a5-8434240115cb": {
+    "@layout": "113d1917-e4cd-4f81-b64a-a8e547d4b79d",
+    "@type": "slate",
+    "block": "726c2b06-924e-4982-b196-059dd8d93cf6",
+    "plaintext": "Key messages",
+    "value": [
+      {
+        "children": [
+          {
+            "text": "Key messages"
+          }
+        ],
+        "type": "h2"
+      }
+    ]
+  },
+  "5af940a7-2790-4865-b4fc-f8fac1c3b712": {
+    "@layout": "d12143de-5df2-4317-9585-a96892526549",
+    "@type": "layoutSettings",
+    "block": "e53925e6-d52c-4362-839f-cf4965b70669",
+    "layout_size": "narrow_view"
+  },
+  "623b5e74-627c-4473-a915-6ac012d4e29a": {
+    "@layout": "d7d5dfa6-68fd-41b4-92c5-6c36f8affb32",
+    "@type": "dividerBlock",
+    "block": "0cb26d4a-05b9-452d-bcb2-e799bc638b50",
+    "hidden": true,
+    "section": true
+  },
+  "7204310a-cd11-4544-906d-652926735059": {
+    "@layout": "2f25f48e-b9a7-4786-98a2-c5fb68854dea",
+    "@type": "columnsBlock",
+    "block": "8307e5f2-2bed-4476-a261-68f7ccf0f713",
+    "data": {
+      "blocks": {
+        "08699998-d479-4767-b6cc-976dc51cd882": {
+          "blocks": {
+            "3862dfd6-4dd3-4029-b582-563d4894f2f3": {
+              "@type": "slate",
+              "plaintext": "Related contents",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Related contents"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "b90d86fc-b908-4adc-b3af-6014ad410ab6": {
+              "@type": "slate",
+              "plaintext": "Interactive map Country factsheets",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Interactive map"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Country factsheets"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "3862dfd6-4dd3-4029-b582-563d4894f2f3",
+              "b90d86fc-b908-4adc-b3af-6014ad410ab6"
+            ]
+          }
+        },
+        "1e705735-ff2c-422e-aa46-1b0b7d36ac5e": {
+          "blocks": {
+            "596f2e8f-c7a8-4baf-b081-e988d7e215d5": {
+              "@type": "slate",
+              "plaintext": "Corporate manual 2015 Corporate manual 2010",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2015"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2010"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            },
+            "9abdff2d-91cd-473a-9d35-f4b8b0416c66": {
+              "@type": "slate",
+              "plaintext": "Previous versions of this report",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Previous versions of this report"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "a87955dd-6dd0-409b-bbdc-f85d30ed79d6": {
+              "@type": "slate",
+              "plaintext": "Previous versions of this report",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Previous versions of this report"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "de9c0d20-7c70-4c9f-b146-3f07eeabace8": {
+              "@type": "slate",
+              "plaintext": "Corporate manual 2015 Corporate manual 2010",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2015"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2010"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "9abdff2d-91cd-473a-9d35-f4b8b0416c66",
+              "596f2e8f-c7a8-4baf-b081-e988d7e215d5"
+            ]
+          }
+        },
+        "767715d4-f00c-4dd1-b812-0eb4a5f1321d": {
+          "blocks": {
+            "a87955dd-6dd0-409b-bbdc-f85d30ed79d6": {
+              "@type": "slate",
+              "plaintext": "Previous versions of this report",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Previous versions of this report"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "de9c0d20-7c70-4c9f-b146-3f07eeabace8": {
+              "@type": "slate",
+              "plaintext": "Corporate manual 2015 Corporate manual 2010",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2015"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate manual 2010"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "a87955dd-6dd0-409b-bbdc-f85d30ed79d6",
+              "de9c0d20-7c70-4c9f-b146-3f07eeabace8"
+            ]
+          }
+        },
+        "98a068e0-3b65-4d77-824b-0b2ac91ac4aa": {
+          "blocks": {
+            "156953da-33f3-499d-8fbb-68826f1d534c": {
+              "@type": "slate",
+              "plaintext": "Interactive map Country factsheets",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Interactive map"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Country factsheets"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            },
+            "3862dfd6-4dd3-4029-b582-563d4894f2f3": {
+              "@type": "slate",
+              "plaintext": "Related contents",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Related contents"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "7c5eac6c-375e-4fc5-a365-baa24d96f9cd": {
+              "@type": "slate",
+              "plaintext": "Related contents",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Related contents"
+                    }
+                  ],
+                  "type": "h3"
+                }
+              ]
+            },
+            "b90d86fc-b908-4adc-b3af-6014ad410ab6": {
+              "@type": "slate",
+              "plaintext": "Interactive map Country factsheets",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "Interactive map"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Country factsheets"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "7c5eac6c-375e-4fc5-a365-baa24d96f9cd",
+              "156953da-33f3-499d-8fbb-68826f1d534c"
+            ]
+          }
+        }
+      },
+      "blocks_layout": {
+        "items": [
+          "98a068e0-3b65-4d77-824b-0b2ac91ac4aa",
+          "1e705735-ff2c-422e-aa46-1b0b7d36ac5e"
+        ]
+      }
+    },
+    "gridCols": ["halfWidth", "halfWidth"],
+    "gridSize": 12,
+    "styles": {}
+  },
+  "7b1cda2d-811e-4e02-86f7-482e73538983": {
+    "@layout": "66851c8d-faee-4af4-85ac-b7d4dac9e9b2",
+    "@type": "slate",
+    "block": "f29dadc1-85e9-4760-a1a2-69e7d2d596d0",
+    "plaintext": "More information",
+    "value": [
+      {
+        "children": [
+          {
+            "text": "More information"
+          }
+        ],
+        "type": "h2"
+      }
+    ]
+  },
+  "a6636b8f-efd7-421b-b8d8-31783a59dc34": {
+    "@layout": "89e93193-9403-4fbb-a0a4-9e0221537f26",
+    "@type": "columnsBlock",
+    "block": "9b697565-b0a6-465c-9870-a52637459bb3",
+    "data": {
+      "blocks": {
+        "891e9c49-b74c-47b2-a5b4-7e827effd2c4": {
+          "blocks": {
+            "46004d27-08c5-4573-b4b1-c52a4d9515b1": {
+              "@type": "nextCloudVideo",
+              "align": "center",
+              "preview_image": "https://www.eea.europa.eu/en/sandbox/maries-sandbox/report-template-draft/capture.png"
+            },
+            "7726213d-65b2-4063-89f1-b5fd791f8b96": {
+              "@type": "nextCloudVideo",
+              "align": "center",
+              "preview_image": "https://www.eea.europa.eu/en/sandbox/maries-sandbox/report-template-draft/capture.png",
+              "url": "https://cmshare.eea.europa.eu/s/i3BGLpKjgzjmETT"
+            }
+          },
+          "blocks_layout": {
+            "items": ["46004d27-08c5-4573-b4b1-c52a4d9515b1"]
+          }
+        },
+        "c35e2ccd-0945-4ead-8053-25077b1dbce5": {
+          "blocks": {
+            "3e4713a0-5132-449f-a545-b49731047d87": {
+              "@type": "slate",
+              "plaintext": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect,",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect, "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "43053ef6-16c9-4edb-b344-135430fbfbb1": {
+              "@type": "slate",
+              "plaintext": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect. "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "6df7b310-6646-40bc-b4c0-04affeb865a0": {
+              "@type": "slate",
+              "plaintext": "Ask an expert:",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Ask an expert: "
+                    }
+                  ],
+                  "type": "h2"
+                }
+              ]
+            },
+            "7f98aad6-a22a-4de8-b066-e9879162bc89": {
+              "@type": "slate",
+              "plaintext": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect,",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect, "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "dabf000f-2573-4c93-9238-a8915bcef28f": {
+              "@type": "slate",
+              "plaintext": "Ask an expert:",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Ask an expert: "
+                    }
+                  ],
+                  "type": "h2"
+                }
+              ]
+            },
+            "eb6a7b38-de3a-4f73-92db-4458387914c1": {
+              "@type": "slate",
+              "plaintext": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect. "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "dabf000f-2573-4c93-9238-a8915bcef28f",
+              "3e4713a0-5132-449f-a545-b49731047d87",
+              "eb6a7b38-de3a-4f73-92db-4458387914c1"
+            ]
+          }
+        },
+        "f092544d-535f-48c7-8001-88dcb77dcac9": {
+          "blocks": {
+            "7726213d-65b2-4063-89f1-b5fd791f8b96": {
+              "@type": "nextCloudVideo",
+              "align": "center",
+              "preview_image": "https://www.eea.europa.eu/en/sandbox/maries-sandbox/report-template-draft/capture.png",
+              "url": "https://cmshare.eea.europa.eu/s/i3BGLpKjgzjmETT"
+            }
+          },
+          "blocks_layout": {
+            "items": ["7726213d-65b2-4063-89f1-b5fd791f8b96"]
+          },
+          "settings": {
+            "backgroundColor": null,
+            "padding": {
+              "bottom": 14,
+              "left": 2,
+              "right": 0,
+              "top": 2,
+              "unlock": true
+            }
+          }
+        },
+        "f802aa27-3501-4b48-9703-114d2d50d3a5": {
+          "blocks": {
+            "43053ef6-16c9-4edb-b344-135430fbfbb1": {
+              "@type": "slate",
+              "plaintext": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "and that behavioural initiatives are not regarded as a standalone solution to the rebound effect. "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "6df7b310-6646-40bc-b4c0-04affeb865a0": {
+              "@type": "slate",
+              "plaintext": "Ask an expert:",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Ask an expert: "
+                    }
+                  ],
+                  "type": "h2"
+                }
+              ]
+            },
+            "7f98aad6-a22a-4de8-b066-e9879162bc89": {
+              "@type": "slate",
+              "plaintext": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect,",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "Importantly, it is recommended that policy pathways are designed to both encourage investment in energy renovation and mitigate the rebound effect, "
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "6df7b310-6646-40bc-b4c0-04affeb865a0",
+              "7f98aad6-a22a-4de8-b066-e9879162bc89",
+              "43053ef6-16c9-4edb-b344-135430fbfbb1"
+            ]
+          },
+          "settings": {
+            "backgroundColor": null
+          }
+        }
+      },
+      "blocks_layout": {
+        "items": [
+          "c35e2ccd-0945-4ead-8053-25077b1dbce5",
+          "891e9c49-b74c-47b2-a5b4-7e827effd2c4"
+        ]
+      }
+    },
+    "gridCols": ["oneThird", "twoThirds"],
+    "gridSize": 12,
+    "styles": {
+      "style_name": "content-box-tertiary"
+    }
+  },
+  "baaf2fa7-2c00-497d-8633-7b912a0d31a6": {
+    "@marker": "serial_title_title",
+    "@layout": "aca54e0a-18ff-4f88-a04f-18f0b0342131",
+    "@type": "title",
+    "block": "baaf2fa7-2c00-497d-8633-7b912a0d31a6",
+    "copyrightIcon": "ri-copyright-line",
+    "hideContentType": false,
+    "hideCreationDate": true,
+    "hideModificationDate": true,
+    "info": [],
+    "placeholder": "Type the report title",
+    "styles": {},
+    "subtitle": "EEA report 11/2023"
+  },
+  "bb075da5-6002-4b14-9a2f-26ab8d3f3d7b": {
+    "@layout": "a4517d09-f98f-4e88-9ed8-59509c7ac126",
+    "@type": "columnsBlock",
+    "block": "9329f48c-5371-426a-83aa-1eb991d76422",
+    "data": {
+      "blocks": {
+        "20490e40-34d1-4dce-a424-fffcd6e4374a": {
+          "blocks": {
+            "205555ae-dceb-4c82-a2e2-a8602b804439": {
+              "@type": "metadata",
+              "data": {
+                "id": "preview_image",
+                "widget": "image"
+              }
+            },
+            "4220caf8-1bc2-4b92-9b51-5dc5ad4d9823": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "6ff20102-9018-4155-81f7-36aeb8841630": {
+              "@type": "image",
+              "align": "center",
+              "alt": "",
+              "copyrightIcon": "ri-copyright-line",
+              "size": "l",
+              "url": "https://www.eea.europa.eu/en/sandbox/maries-sandbox/corporate-identity-manual-cover.gif"
+            },
+            "9dca2d0c-4267-4a56-9f38-55de9dedd04b": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "undefined": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "205555ae-dceb-4c82-a2e2-a8602b804439",
+              "4220caf8-1bc2-4b92-9b51-5dc5ad4d9823"
+            ]
+          }
+        },
+        "a4a87a5b-0b57-45be-931c-7718a87699e0": {
+          "blocks": {
+            "034f85ed-741d-46e1-bd5f-e23559494fea": {
+              "@type": "slate",
+              "plaintext": " Corporate identity manual ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate identity manual"
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "08e4cd79-bf68-4faa-acac-fece4f124abc": {
+              "@type": "slate",
+              "plaintext": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community."
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "269a369a-9e7f-4a11-8502-a29d8bca9bed": {
+              "@type": "slate",
+              "plaintext": "   EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264 ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "style-secondary": true,
+                      "style-tertiary": true,
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": ""
+                        },
+                        {
+                          "children": [
+                            {
+                              "style-secondary": true,
+                              "style-tertiary": true,
+                              "text": ""
+                            }
+                          ],
+                          "type": "strong"
+                        },
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": "EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264"
+                        }
+                      ],
+                      "type": "small"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "40702b29-2a40-4b3d-b8a7-3377d68017a1": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "style-secondary": true,
+                      "style-tertiary": true,
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "57b5cc13-ed60-4214-a83d-67615771f67f": {
+              "@type": "slate",
+              "plaintext": " ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "a8628b39-a548-47f5-ac08-aa5d118a9e32": {
+              "@type": "dividerBlock",
+              "hidden": true,
+              "section": false,
+              "styles": {}
+            },
+            "adebb432-86a5-4535-84d6-5470949089cf": {
+              "@type": "callToActionBlock",
+              "styles": {
+                "align": "right",
+                "theme": "primary"
+              },
+              "text": "Read the pdf report"
+            },
+            "b24e39ff-0d98-4fb8-ae83-114eb26c1e38": {
+              "@type": "columnsBlock",
+              "data": {
+                "blocks": {
+                  "6a69f237-bff4-409e-9379-7936f4d51e7d": {
+                    "blocks": {
+                      "19ca83f0-67bc-483f-8425-d300c78cd376": {
+                        "@type": "slate",
+                        "plaintext": " 31 august 2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "31 august 2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "styleName": "text-right",
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["19ca83f0-67bc-483f-8425-d300c78cd376"]
+                    }
+                  },
+                  "a0109372-c78d-4077-9c31-92300eb6b2e9": {
+                    "blocks": {
+                      "e2cb3846-2798-4bf0-84e7-8172366511c3": {
+                        "@type": "slate",
+                        "plaintext": " EEA report  11/2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "EEA report  11/2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["e2cb3846-2798-4bf0-84e7-8172366511c3"]
+                    }
+                  }
+                },
+                "blocks_layout": {
+                  "items": [
+                    "a0109372-c78d-4077-9c31-92300eb6b2e9",
+                    "6a69f237-bff4-409e-9379-7936f4d51e7d"
+                  ]
+                }
+              },
+              "gridCols": ["halfWidth", "halfWidth"],
+              "gridSize": 12,
+              "styles": {}
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "034f85ed-741d-46e1-bd5f-e23559494fea",
+              "b24e39ff-0d98-4fb8-ae83-114eb26c1e38",
+              "08e4cd79-bf68-4faa-acac-fece4f124abc",
+              "269a369a-9e7f-4a11-8502-a29d8bca9bed",
+              "a8628b39-a548-47f5-ac08-aa5d118a9e32",
+              "40702b29-2a40-4b3d-b8a7-3377d68017a1",
+              "57b5cc13-ed60-4214-a83d-67615771f67f",
+              "adebb432-86a5-4535-84d6-5470949089cf"
+            ]
+          }
+        },
+        "b7a84107-5bf1-4107-aca6-e67d32913f23": {
+          "blocks": {
+            "034f85ed-741d-46e1-bd5f-e23559494fea": {
+              "@type": "slate",
+              "plaintext": " Corporate identity manual ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Corporate identity manual"
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "08e4cd79-bf68-4faa-acac-fece4f124abc": {
+              "@type": "slate",
+              "plaintext": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community."
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "269a369a-9e7f-4a11-8502-a29d8bca9bed": {
+              "@type": "slate",
+              "plaintext": "   EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264 ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "style-secondary": true,
+                      "style-tertiary": true,
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": ""
+                        },
+                        {
+                          "children": [
+                            {
+                              "style-secondary": true,
+                              "style-tertiary": true,
+                              "text": ""
+                            }
+                          ],
+                          "type": "strong"
+                        },
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": "EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264"
+                        }
+                      ],
+                      "type": "small"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "40702b29-2a40-4b3d-b8a7-3377d68017a1": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "style-secondary": true,
+                      "style-tertiary": true,
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "57b5cc13-ed60-4214-a83d-67615771f67f": {
+              "@type": "slate",
+              "plaintext": " ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "a609f125-29bc-4119-abe9-90e73a2597cf": {
+              "@type": "columnsBlock",
+              "data": {
+                "blocks": {
+                  "10bca960-8890-4695-8cc4-6b300b543d1e": {
+                    "blocks": {
+                      "8f4a3784-7584-4d3e-a11d-1f4405cf9d2d": {
+                        "@marker": "serial_title_slate",
+                        "@type": "slate",
+                        "plaintext": " EEA report  11/2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "EEA report  11/2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      },
+                      "e2cb3846-2798-4bf0-84e7-8172366511c3": {
+                        "@type": "slate",
+                        "plaintext": " EEA report  11/2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "EEA report  11/2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      },
+                      "undefined": {
+                        "@type": "slate",
+                        "plaintext": "EEA report  11/2023",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": "EEA report  11/2023"
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["8f4a3784-7584-4d3e-a11d-1f4405cf9d2d"]
+                    }
+                  },
+                  "50a986e1-f23c-4d3f-88da-84c548552b29": {
+                    "blocks": {
+                      "4e6b89a2-e4f8-4c77-bf45-755588551bc5": {
+                        "@type": "slate",
+                        "plaintext": "  31 August 2024  ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": ""
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "text": "31 August 2024"
+                                      }
+                                    ],
+                                    "data": {
+                                      "metadata": "effective",
+                                      "widget": "datetime"
+                                    },
+                                    "type": "mention"
+                                  },
+                                  {
+                                    "text": ""
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      },
+                      "undefined": {
+                        "@type": "slate",
+                        "plaintext": "",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["4e6b89a2-e4f8-4c77-bf45-755588551bc5"]
+                    }
+                  },
+                  "6a69f237-bff4-409e-9379-7936f4d51e7d": {
+                    "blocks": {
+                      "19ca83f0-67bc-483f-8425-d300c78cd376": {
+                        "@type": "slate",
+                        "plaintext": " 31 august 2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "31 august 2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "styleName": "text-right",
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["19ca83f0-67bc-483f-8425-d300c78cd376"]
+                    }
+                  },
+                  "a0109372-c78d-4077-9c31-92300eb6b2e9": {
+                    "blocks": {
+                      "e2cb3846-2798-4bf0-84e7-8172366511c3": {
+                        "@type": "slate",
+                        "plaintext": " EEA report  11/2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "EEA report  11/2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["e2cb3846-2798-4bf0-84e7-8172366511c3"]
+                    }
+                  }
+                },
+                "blocks_layout": {
+                  "items": [
+                    "10bca960-8890-4695-8cc4-6b300b543d1e",
+                    "50a986e1-f23c-4d3f-88da-84c548552b29"
+                  ]
+                }
+              },
+              "gridCols": ["halfWidth", "halfWidth"],
+              "gridSize": 12,
+              "styles": {}
+            },
+            "a855e34f-b59b-4a45-b38a-fa1746cb906b": {
+              "@type": "dividerBlock",
+              "hidden": true,
+              "section": false,
+              "styles": {}
+            },
+            "a8628b39-a548-47f5-ac08-aa5d118a9e32": {
+              "@type": "dividerBlock",
+              "hidden": true,
+              "section": false,
+              "styles": {}
+            },
+            "adebb432-86a5-4535-84d6-5470949089cf": {
+              "@type": "callToActionBlock",
+              "styles": {
+                "align": "right",
+                "theme": "primary"
+              },
+              "text": "Read the pdf report"
+            },
+            "b24e39ff-0d98-4fb8-ae83-114eb26c1e38": {
+              "@type": "columnsBlock",
+              "data": {
+                "blocks": {
+                  "6a69f237-bff4-409e-9379-7936f4d51e7d": {
+                    "blocks": {
+                      "19ca83f0-67bc-483f-8425-d300c78cd376": {
+                        "@type": "slate",
+                        "plaintext": " 31 august 2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "31 august 2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "styleName": "text-right",
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["19ca83f0-67bc-483f-8425-d300c78cd376"]
+                    }
+                  },
+                  "a0109372-c78d-4077-9c31-92300eb6b2e9": {
+                    "blocks": {
+                      "e2cb3846-2798-4bf0-84e7-8172366511c3": {
+                        "@type": "slate",
+                        "plaintext": " EEA report  11/2023 ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "EEA report  11/2023"
+                                  }
+                                ],
+                                "type": "small"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["e2cb3846-2798-4bf0-84e7-8172366511c3"]
+                    }
+                  }
+                },
+                "blocks_layout": {
+                  "items": [
+                    "a0109372-c78d-4077-9c31-92300eb6b2e9",
+                    "6a69f237-bff4-409e-9379-7936f4d51e7d"
+                  ]
+                }
+              },
+              "gridCols": ["halfWidth", "halfWidth"],
+              "gridSize": 12,
+              "styles": {}
+            },
+            "b4900f67-df5c-4ae3-9bf4-f6e8061e6b8c": {
+              "@type": "slate",
+              "plaintext": "  Report title    ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        },
+                        {
+                          "children": [
+                            {
+                              "text": "Report title"
+                            }
+                          ],
+                          "data": {
+                            "metadata": "title",
+                            "widget": "string"
+                          },
+                          "type": "mention"
+                        },
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "b6d39691-72fd-47b1-9f13-8ed0649ff7ac": {
+              "@marker": "file_call_to_action",
+              "@type": "callToActionBlock",
+              "styles": {
+                "align": "right",
+                "theme": "primary"
+              },
+              "text": "Read the pdf report"
+            },
+            "bdb5f43a-ef3d-42d8-99e2-36033aceaf92": {
+              "@type": "slate",
+              "plaintext": " ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "c19dca87-3513-4d05-9b69-4f031c7e6399": {
+              "@type": "description",
+              "placeholder": "Type the report abstract in this block",
+              "plaintext": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community.",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": "This report explores the historical trends, most recent progress and projected future progress on climate change mitigation through reduced GHG emissions, renewable energy gains and improved energy efficiency. It builds upon data reported by the EU-27 Member States, five EEA member countries and nine Contracting Parties of the Energy Community."
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "d9cf70d9-eefc-4fea-8ff7-5a02881e19db": {
+              "@marker": "order_id_isbn_slate",
+              "@type": "slate",
+              "plaintext": "   EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264 ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "style-secondary": true,
+                      "style-tertiary": true,
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": ""
+                        },
+                        {
+                          "children": [
+                            {
+                              "style-secondary": true,
+                              "style-tertiary": true,
+                              "text": ""
+                            }
+                          ],
+                          "type": "strong"
+                        },
+                        {
+                          "style-secondary": true,
+                          "style-tertiary": true,
+                          "text": "EN PDF: TH-AM-23-016-EN-N - ISBN: 978-92-9480-578-2 - ISSN: 2467-3196 - doi: 10.2800/325264"
+                        }
+                      ],
+                      "type": "small"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "f7db5c9c-cbd8-4829-97b1-71e589e979fc": {
+              "@type": "dividerBlock",
+              "hidden": true,
+              "section": true
+            },
+            "undefined": {
+              "@type": "slate",
+              "plaintext": "  Report title    ",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        },
+                        {
+                          "children": [
+                            {
+                              "text": "Report title"
+                            }
+                          ],
+                          "data": {},
+                          "type": "mention"
+                        },
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": "strong"
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "b4900f67-df5c-4ae3-9bf4-f6e8061e6b8c",
+              "a609f125-29bc-4119-abe9-90e73a2597cf",
+              "c19dca87-3513-4d05-9b69-4f031c7e6399",
+              "f7db5c9c-cbd8-4829-97b1-71e589e979fc",
+              "d9cf70d9-eefc-4fea-8ff7-5a02881e19db",
+              "a855e34f-b59b-4a45-b38a-fa1746cb906b",
+              "bdb5f43a-ef3d-42d8-99e2-36033aceaf92",
+              "b6d39691-72fd-47b1-9f13-8ed0649ff7ac"
+            ]
+          }
+        },
+        "cf85831f-8840-46d6-a218-db70f6861926": {
+          "blocks": {
+            "6ff20102-9018-4155-81f7-36aeb8841630": {
+              "@type": "image",
+              "align": "center",
+              "alt": "",
+              "copyrightIcon": "ri-copyright-line",
+              "size": "l",
+              "url": "https://www.eea.europa.eu/en/sandbox/maries-sandbox/corporate-identity-manual-cover.gif"
+            },
+            "9dca2d0c-4267-4a56-9f38-55de9dedd04b": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "6ff20102-9018-4155-81f7-36aeb8841630",
+              "9dca2d0c-4267-4a56-9f38-55de9dedd04b"
+            ]
+          }
+        }
+      },
+      "blocks_layout": {
+        "items": [
+          "20490e40-34d1-4dce-a424-fffcd6e4374a",
+          "b7a84107-5bf1-4107-aca6-e67d32913f23"
+        ]
+      }
+    },
+    "gridCols": ["oneThird", "twoThirds"],
+    "gridSize": 12,
+    "styles": {
+      "style_name": "content-box-gray"
+    }
+  },
+  "f999f02a-ddb6-4c18-af47-c3f522250e2d": {
+    "@layout": "5200bfba-2c3e-4415-a408-0f8c08322506",
+    "@type": "slate",
+    "block": "6527af7b-3780-4687-b5de-2ce539600440",
+    "plaintext": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "value": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            ],
+            "type": "li"
+          },
+          {
+            "children": [
+              {
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            ],
+            "type": "li"
+          }
+        ],
+        "type": "ul"
+      }
+    ]
+  },
+  "fd2fca8e-eb41-449a-a9a5-0f360a083a76": {
+    "@layout": "0a3f11ca-f5c1-4043-9780-1777a228fae9",
+    "@type": "tabs_block",
+    "block": "66f9cf2a-3248-426d-9dd6-6147cb39faa6",
+    "data": {
+      "assetPosition": "top",
+      "blocks": {
+        "13e424cd-5934-4614-92ef-e6be8d05c441": {
+          "@type": "tab",
+          "blocks": {
+            "1261ea34-1fc5-4d2f-a659-d9711bfbca9c": {
+              "@type": "accordion",
+              "collapsed": true,
+              "data": {
+                "blocks": {
+                  "532e78ff-7b9a-41ef-b2ba-6bfecc108d08": {
+                    "@type": "accordionPanel",
+                    "blocks": {
+                      "d97915e3-5198-4a20-8973-67eddd281a9f": {
+                        "@type": "slate"
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["d97915e3-5198-4a20-8973-67eddd281a9f"]
+                    },
+                    "title": "3. chapter"
+                  },
+                  "6ef67d5d-7360-41d2-af9e-511063d932cf": {
+                    "@type": "accordionPanel",
+                    "blocks": {
+                      "9b9cfcac-dee4-47bf-bf7b-88ccd2de869a": {
+                        "@type": "slate",
+                        "plaintext": "",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      },
+                      "undefined": {
+                        "@type": "slate",
+                        "plaintext": "",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": ["9b9cfcac-dee4-47bf-bf7b-88ccd2de869a"]
+                    },
+                    "title": "2. chapter"
+                  },
+                  "9aab795f-a297-4725-81af-7761b754e3e4": {
+                    "@type": "accordionPanel",
+                    "blocks": {
+                      "12b95dc6-2798-4345-94c2-d3bf1436143e": {
+                        "@type": "slate",
+                        "plaintext": " The Corporate identity manual provides a graphical style guide for EEA reports and online services as well as guidelines for a coherent look of other items produced by the Agency. ",
+                        "value": [
+                          {
+                            "children": [
+                              {
+                                "text": ""
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "text": "The Corporate identity manual provides a graphical style guide for EEA reports and online services as well as guidelines for a coherent look of other items produced by the Agency."
+                                  }
+                                ],
+                                "type": "light"
+                              },
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "type": "p"
+                          }
+                        ]
+                      },
+                      "4c09d7ba-b397-4261-9a85-6cced77534ba": {
+                        "@type": "callToActionBlock",
+                        "styles": {
+                          "align": "right",
+                          "theme": "primary"
+                        },
+                        "text": "Read chapter 1"
+                      }
+                    },
+                    "blocks_layout": {
+                      "items": [
+                        "12b95dc6-2798-4345-94c2-d3bf1436143e",
+                        "4c09d7ba-b397-4261-9a85-6cced77534ba"
+                      ]
+                    },
+                    "title": "1. chapter"
+                  }
+                },
+                "blocks_layout": {
+                  "items": [
+                    "9aab795f-a297-4725-81af-7761b754e3e4",
+                    "6ef67d5d-7360-41d2-af9e-511063d932cf",
+                    "532e78ff-7b9a-41ef-b2ba-6bfecc108d08"
+                  ]
+                }
+              },
+              "non_exclusive": false,
+              "right_arrows": true,
+              "styles": {}
+            },
+            "8937dc26-5657-4105-959e-0bbf2352d771": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "1261ea34-1fc5-4d2f-a659-d9711bfbca9c",
+              "8937dc26-5657-4105-959e-0bbf2352d771"
+            ]
+          },
+          "title": "Table of contents"
+        },
+        "3ea17926-72e8-4d1c-a76a-09c6b4b1c3a4": {
+          "@type": "tab",
+          "blocks": {
+            "6d5201c3-839b-49e2-8a92-fc62dd4b18f8": {
+              "@type": "slate"
+            },
+            "a549b9a3-0558-4692-a663-a55cc6393715": {
+              "@type": "search",
+              "availableViews": ["summary"],
+              "itemModel": {
+                "@type": "imageOnLeft",
+                "callToAction": {
+                  "enable": false
+                },
+                "hasDate": true,
+                "hasDescription": true,
+                "hasLabel": false,
+                "hasLink": true,
+                "hasMetaType": true,
+                "hasTags": false,
+                "maxTitle": "3",
+                "styles": {
+                  "inverted:bool": false
+                },
+                "titleOnImage": false
+              },
+              "listingBodyTemplate": "summary",
+              "query": {
+                "b_size": "5",
+                "query": [
+                  {
+                    "i": "portal_type",
+                    "o": "plone.app.querystring.operation.selection.any",
+                    "v": [
+                      "chart_static",
+                      "visualization",
+                      "map_interactive",
+                      "map_static",
+                      "tableau_visualization",
+                      "infographic",
+                      "map_visualization"
+                    ]
+                  }
+                ],
+                "sort_on": "sortable_title",
+                "sort_order": "ascending"
+              },
+              "showSearchInput": true,
+              "showSortOn": false,
+              "showTotalResults": true
+            },
+            "b43f2ea4-098c-4323-b5b0-622b58580209": {
+              "@type": "slate",
+              "plaintext": "",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": "p"
+                }
+              ]
+            },
+            "undefined": {
+              "@type": "search",
+              "availableViews": ["summary"],
+              "itemModel": {
+                "@type": "imageOnLeft",
+                "callToAction": {
+                  "enable": false
+                },
+                "hasDate": true,
+                "hasDescription": true,
+                "hasLabel": false,
+                "hasLink": true,
+                "hasMetaType": true,
+                "hasTags": false,
+                "maxTitle": "3",
+                "styles": {
+                  "inverted:bool": false
+                },
+                "titleOnImage": false
+              },
+              "listingBodyTemplate": "summary",
+              "query": {
+                "b_size": "5",
+                "query": [
+                  {
+                    "i": "portal_type",
+                    "o": "plone.app.querystring.operation.selection.any",
+                    "v": [
+                      "chart_static",
+                      "visualization",
+                      "map_interactive",
+                      "map_static",
+                      "tableau_visualization",
+                      "infographic",
+                      "map_visualization"
+                    ]
+                  }
+                ],
+                "sort_on": "sortable_title",
+                "sort_order": "ascending"
+              },
+              "showSearchInput": true,
+              "showSortOn": false,
+              "showTotalResults": true
+            }
+          },
+          "blocks_layout": {
+            "items": [
+              "a549b9a3-0558-4692-a663-a55cc6393715",
+              "6d5201c3-839b-49e2-8a92-fc62dd4b18f8",
+              "b43f2ea4-098c-4323-b5b0-622b58580209"
+            ]
+          },
+          "selected": "6d5201c3-839b-49e2-8a92-fc62dd4b18f8",
+          "title": "Maps and charts"
+        },
+        "cf11b466-fb60-4b6a-a1f2-6f64aedb34e1": {
+          "@type": "tab",
+          "blocks": {
+            "94379cdc-c608-41f6-8ba0-b43f1018d3a4": {
+              "@type": "slate",
+              "plaintext": "English PDF - 50 MB German PDF - 80MB French PDF - 75MB",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "English PDF - 50 MB"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "German PDF - 80MB"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "French PDF - 75MB"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            },
+            "undefined": {
+              "@type": "slate",
+              "plaintext": "English PDF - 50 MB German PDF - 80MB French PDF - 75MB",
+              "value": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "text": "English PDF - 50 MB"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "German PDF - 80MB"
+                        }
+                      ],
+                      "type": "li"
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "French PDF - 75MB"
+                        }
+                      ],
+                      "type": "li"
+                    }
+                  ],
+                  "type": "ul"
+                }
+              ]
+            }
+          },
+          "blocks_layout": {
+            "items": ["94379cdc-c608-41f6-8ba0-b43f1018d3a4"]
+          },
+          "title": "Downloads"
+        }
+      },
+      "blocks_layout": {
+        "items": [
+          "13e424cd-5934-4614-92ef-e6be8d05c441",
+          "cf11b466-fb60-4b6a-a1f2-6f64aedb34e1",
+          "3ea17926-72e8-4d1c-a76a-09c6b4b1c3a4"
+        ]
+      },
+      "iconSize": "small",
+      "imageSize": "icon"
+    },
+    "menuColor": "blue",
+    "menuFluid": true,
+    "menuInverted": true,
+    "menuPointing": true,
+    "menuSecondary": true,
+    "styles": {
+      "style_name": null
+    },
+    "template": "accordion",
+    "theme": "primary",
+    "variation": "default",
+    "verticalAlign": "flex-start"
+  }
+}
