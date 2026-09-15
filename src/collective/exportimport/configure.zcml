@@ -28,6 +28,14 @@
       />
 
   <browser:page
+      name="export_newsItem"
+      for="zope.interface.Interface"
+      class=".export_epanet.ExportNewsItem"
+      template="templates/export_content.pt"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
       zcml:condition="installed Products.ATContentTypes.content.topic"
       name="export_content"
       for="Products.ATContentTypes.interfaces.IATTopic"

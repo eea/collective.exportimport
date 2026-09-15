@@ -218,7 +218,6 @@ class ExportEpanet(ExportContent):
             item = self._build_blocks(item, obj)
             item = self._rewrite_urls(item, obj)
             item = self._merge_default_page(item, obj)
-            item = self._extract_inline_images(item, obj)
             item = self._normalize_blocks(item, obj)
             item = self._record_manifest(item, obj)
         except Exception as exc:
@@ -732,3 +731,39 @@ class ExportEpanet(ExportContent):
         with open(report_path, "w") as f:
             f.write("\n".join(lines))
         logger.info("Wrote %s", report_path)
+
+
+class ExportNewsItem(ExportEpanet):
+    """Export only News Items, promoting inline Slate images to image blocks.
+
+    This is a thin specialization of :class:`ExportEpanet`.  It limits the
+    catalog query to ``News Item`` objects and runs the inline-image extractor
+    on every exported item.
+
+    Usage::
+
+        @@export_newsItem?download_to_server=1
+            &target_root=https://demo-www.eea.europa.eu/en/epanet
+            &converter_url=http://volto-blocks-converter:8000/toblocks
+    """
+
+    def build_query(self):
+        """Restrict the export to News Items."""
+        query = super(ExportNewsItem, self).build_query()
+        query["portal_type"] = ["News Item"]
+        return query
+
+    def global_obj_hook(self, obj):
+        """Safety net: skip anything that is not a News Item."""
+        if obj.portal_type != "News Item":
+            return None
+        return super(ExportNewsItem, self).global_obj_hook(obj)
+
+    def global_dict_hook(self, item, obj):
+        """Apply the parent transforms, then extract inline Slate images."""
+        item = super(ExportNewsItem, self).global_dict_hook(item, obj)
+        if item is None:
+            return None
+        item = self._extract_inline_images(item, obj)
+        return item
+
