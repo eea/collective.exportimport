@@ -30,7 +30,7 @@
   <browser:page
       name="export_newsItem"
       for="zope.interface.Interface"
-      class=".export_epanet.ExportNewsItem"
+      class=".export_newsitem.ExportNewsItem"
       template="templates/export_content.pt"
       permission="cmf.ManagePortal"
       />
