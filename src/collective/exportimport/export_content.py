@@ -355,6 +355,9 @@ class ExportContent(BrowserView):
         query = self.build_query()
         catalog = api.portal.get_tool("portal_catalog")
         brains = catalog.unrestrictedSearchResults(**query)
+        p = int(self.request.get("p", "0") or "0")
+        nrOfHits = int(self.request.get("nrOfHits", "0") or "0")
+        cindex = 0
         logger.info(u"Exporting {} {}".format(len(brains), self.portal_type))
 
         # Override richtext serializer to export links using resolveuid/xxx
@@ -371,6 +374,16 @@ class ExportContent(BrowserView):
 
             if skip:
                 continue
+
+            if p and nrOfHits:
+                startIndex = (p - 1) * nrOfHits
+                endIndex = p * nrOfHits
+                if cindex < startIndex:
+                    cindex += 1
+                    continue
+                if cindex >= endIndex:
+                    break
+                cindex += 1
 
             if not index % 100:
                 logger.info(u"Handled {} items...".format(index))
@@ -401,8 +414,14 @@ class ExportContent(BrowserView):
                 else:
                     item = serializer()
                 item = self.update_export_data(item, obj)
+                if not item:
+                    continue
 
-                yield item
+                if isinstance(item, list):
+                    for i in item:
+                        yield i
+                else:
+                    yield item
             except Exception:
                 msg = u"Error exporting {}".format(obj.absolute_url())
                 self.errors.append({"path": obj.absolute_url(), "message": msg})
@@ -469,15 +488,16 @@ class ExportContent(BrowserView):
         return item
 
     def global_dict_hook(self, item, obj):
-        """Use this to modify or skip the serialized data.
+        """Use this to modify, skip or split the serialized data.
         Return None if you want to skip this particular object.
+        Return a list of dicts if you want to split it into multiple items.
         """
         return item
 
     def custom_dict_hook(self, item, obj):
         """Add you own method e.g. def dict_hook_document(self, item, obj)
-        Use this to modify or skip the serialized data by type.
-        Return a dict or None if you want to skip this particular object.
+        Use this to modify, skip or split the serialized data by type.
+        Return a dict, a list of dicts, or None if you want to skip this particular object.
         """
         hook = getattr(self, "dict_hook_{}".format(self.safe_portal_type), None)
         if hook and callable(hook):
