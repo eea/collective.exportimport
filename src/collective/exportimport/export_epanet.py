@@ -218,6 +218,7 @@ class ExportEpanet(ExportContent):
             item = self._build_blocks(item, obj)
             item = self._rewrite_urls(item, obj)
             item = self._merge_default_page(item, obj)
+            item = self._extract_inline_images(item, obj)
             item = self._normalize_blocks(item, obj)
             item = self._record_manifest(item, obj)
         except Exception as exc:
@@ -447,6 +448,111 @@ class ExportEpanet(ExportContent):
             "Merged default page %s into %s", default_page_id, item.get("@id")
         )
         return item
+
+    def _extract_inline_images(self, item, obj):
+        """Promote inline Slate images to standalone image blocks.
+
+        The blocks converter turns inline <img> tags into Slate inline images
+        (``type: img`` nodes).  For a cleaner Volto layout, extract them into
+        standalone ``image`` blocks placed before the Slate block they came
+        from.
+        """
+        blocks = item.get("blocks")
+        layout = item.get("blocks_layout", {}).get("items")
+        if not blocks or not layout:
+            return item
+
+        new_layout = []
+        new_blocks = dict(blocks)
+
+        for block_id in layout:
+            block = new_blocks.get(block_id)
+            if block and block.get("@type") == "slate":
+                extracted = []
+                cleaned_value = self._remove_inline_images(
+                    block.get("value", []), extracted
+                )
+
+                for img_info in extracted:
+                    img_block_id = str(uuid.uuid4())
+                    img_block = {
+                        "@type": "image",
+                        "url": img_info["url"],
+                        "alt": img_info.get("alt", ""),
+                        "title": img_info.get("title", ""),
+                        "align": img_info.get("align", ""),
+                    }
+                    if img_info.get("image_scales"):
+                        img_block["image_scales"] = img_info["image_scales"]
+                    new_blocks[img_block_id] = img_block
+                    new_layout.append(img_block_id)
+
+                if extracted:
+                    block["value"] = [
+                        node
+                        for node in cleaned_value
+                        if not self._is_empty_slate_node(node)
+                    ]
+                    block.pop("plaintext", None)
+
+            new_layout.append(block_id)
+
+        item["blocks"] = new_blocks
+        item["blocks_layout"]["items"] = new_layout
+        return item
+
+    def _remove_inline_images(self, value, extracted):
+        """Recursively walk a Slate value and extract ``type: img`` nodes.
+
+        Returns the cleaned value tree; removed image nodes are appended to
+        ``extracted`` as dicts with url/alt/title/scale/align/image_scales.
+        """
+        if isinstance(value, list):
+            result = []
+            for child in value:
+                cleaned = self._remove_inline_images(child, extracted)
+                if cleaned is None:
+                    continue
+                if isinstance(cleaned, list):
+                    result.extend(cleaned)
+                else:
+                    result.append(cleaned)
+            return result
+
+        if isinstance(value, dict):
+            if value.get("type") == "img":
+                extracted.append(
+                    {
+                        "url": value.get("url"),
+                        "alt": value.get("alt", ""),
+                        "title": value.get("title", ""),
+                        "scale": value.get("scale"),
+                        "align": value.get("align", ""),
+                        "image_scales": value.get("image_scales"),
+                    }
+                )
+                return None
+
+            cleaned = dict(value)
+            if "children" in cleaned:
+                cleaned["children"] = self._remove_inline_images(
+                    cleaned["children"], extracted
+                )
+            return cleaned
+
+        return value
+
+    def _is_empty_slate_node(self, node):
+        """Return True if a Slate node has no visible text."""
+        if not isinstance(node, dict):
+            return False
+        text = node.get("text")
+        if text is not None:
+            return not str(text).strip()
+        children = node.get("children", [])
+        if not children:
+            return True
+        return all(self._is_empty_slate_node(child) for child in children)
 
     # ----------------------------------------------------------------------
     # Helpers: resolveuid normalization
