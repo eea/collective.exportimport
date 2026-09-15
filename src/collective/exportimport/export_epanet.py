@@ -448,6 +448,8 @@ class ExportEpanet(ExportContent):
         )
         return item
 
+    _INLINE_SLATE_TYPES = {"strong", "em", "u", "s", "code", "a", "sub", "sup"}
+
     def _extract_inline_images(self, item, obj):
         """Promote inline Slate images to standalone image blocks.
 
@@ -471,6 +473,7 @@ class ExportEpanet(ExportContent):
                 cleaned_value = self._remove_inline_images(
                     block.get("value", []), extracted
                 )
+                cleaned_value = self._clean_empty_inline_nodes(cleaned_value)
 
                 for img_info in extracted:
                     img_block_id = str(uuid.uuid4())
@@ -499,6 +502,44 @@ class ExportEpanet(ExportContent):
         item["blocks"] = new_blocks
         item["blocks_layout"]["items"] = new_layout
         return item
+
+    def _clean_empty_inline_nodes(self, value):
+        """Remove inline formatting nodes that became empty after image extraction."""
+        if isinstance(value, list):
+            result = []
+            for child in value:
+                cleaned = self._clean_empty_inline_nodes(child)
+                if cleaned is None:
+                    continue
+                if isinstance(cleaned, list):
+                    result.extend(cleaned)
+                else:
+                    result.append(cleaned)
+            return result
+
+        if isinstance(value, dict):
+            node_type = value.get("type")
+            children = value.get("children")
+            if children is not None:
+                value = dict(value)
+                value["children"] = self._clean_empty_inline_nodes(children)
+            if node_type in self._INLINE_SLATE_TYPES and not self._has_any_text(value):
+                return None
+            return value
+
+        return value
+
+    def _has_any_text(self, node):
+        """Return True if a Slate node contains non-empty text."""
+        if isinstance(node, dict):
+            if node.get("text"):
+                return True
+            return any(
+                self._has_any_text(child) for child in node.get("children", [])
+            )
+        if isinstance(node, list):
+            return any(self._has_any_text(child) for child in node)
+        return False
 
     def _remove_inline_images(self, value, extracted):
         """Recursively walk a Slate value and extract ``type: img`` nodes.
