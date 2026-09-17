@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """News Item-only export view for the EPANET migration."""
-from collective.exportimport.export_epanet import ExportEpanet
+from collective.exportimport.export_epanet import ExportCustomContent
 
 import uuid
 
 
-class ExportNewsItem(ExportEpanet):
+class ExportNewsItem(ExportCustomContent):
     """Export only News Items, promoting inline Slate images to image blocks.
 
-    This is a thin specialization of :class:`ExportEpanet`.  It limits the
+    This is a thin specialization of :class:`ExportCustomContent`.  It limits the
     catalog query to ``News Item`` objects, runs the inline-image extractor,
     and then applies the default News Item (press release) block layout around
     the existing migrated body blocks.

@@ -20,9 +20,25 @@
       />
 
   <browser:page
+      name="export_custom_content"
+      for="zope.interface.Interface"
+      class=".export_epanet.ExportCustomContent"
+      template="templates/export_content.pt"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
       name="export_epanet"
       for="zope.interface.Interface"
-      class=".export_epanet.ExportEpanet"
+      class=".export_epanet.ExportCustomContent"
+      template="templates/export_content.pt"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
+      name="export_custom_newsItem"
+      for="zope.interface.Interface"
+      class=".export_newsitem.ExportNewsItem"
       template="templates/export_content.pt"
       permission="cmf.ManagePortal"
       />

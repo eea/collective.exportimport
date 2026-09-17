@@ -30,30 +30,27 @@ logger = logging.getLogger(__name__)
 RESOLVEUID_REF_RE = re.compile(r"resolveuid/([a-f0-9]{32})")
 
 
-class ExportEpanet(ExportContent):
-    """Export and transform EPANET classic content for import into a Volto subsite.
+class ExportCustomContent(ExportContent):
+    """Generic export and transform view for classic content into a Volto subsite.
 
-    The view is a thin wrapper around :class:`ExportContent`.  It reuses the
-    existing serialization pipeline and applies EPANET-specific transformations
-    in the ``global_dict_hook``:
+    This view is a generalization of the original EPANET-specific exporter.
+    It applies the same transforms (type mapping, URL rewrite, HTML-to-blocks
+    conversion, default-page body merge, inline-image extraction, resolveuid
+    normalization, collection extraction), but uses generic defaults so it can
+    be reused for other migration profiles.
 
-    * type mapping (Folder -> Document)
-    * field filtering and language normalization
-    * URL rewriting so items land under the target subsite
-    * HTML-to-Volto-blocks conversion via eea-volto-blocks-converter
-    * default-page body merge into the parent Folder-turned-Document
-    * resolveuid link normalization inside blocks
-    * collection extraction for manual rebuild as listing blocks
+    For backwards compatibility the original ``ExportEpanet`` name is kept as
+    an alias at module level.
 
     Usage::
 
-        @@export_epanet?download_to_server=1
+        @@export_custom_content?download_to_server=1
             &target_root=https://demo-www.eea.europa.eu/en/epanet
             &converter_url=http://localhost:8000/toblocks
 
     Report artifacts are written next to the downloaded JSON::
 
-        <clienthome>/epanet-export-reports/
+        <clienthome>/custom-export-reports/
             manifest.json
             collections.json
             unconvertible.json
@@ -175,10 +172,10 @@ class ExportEpanet(ExportContent):
         if not directory:
             cfg = getConfiguration()
             directory = cfg.clienthome
-        self.report_dir = os.path.join(directory, "epanet-export-reports")
+        self.report_dir = os.path.join(directory, "custom-export-reports")
         if not os.path.exists(self.report_dir):
             os.makedirs(self.report_dir)
-            logger.info("Created EPANET export report directory %s", self.report_dir)
+            logger.info("Created custom export report directory %s", self.report_dir)
 
     def finish(self):
         """Write migration report artifacts."""
@@ -699,7 +696,7 @@ class ExportEpanet(ExportContent):
 
         report_path = os.path.join(self.report_dir, "MIGRATION_REPORT.md")
         lines = [
-            "# EPANET Migration Report",
+            "# Custom Content Migration Report",
             "",
             "**Generated:** {}".format(generated),
             "",
@@ -774,3 +771,5 @@ class ExportEpanet(ExportContent):
         logger.info("Wrote %s", report_path)
 
 
+# Backwards-compatible alias
+ExportEpanet = ExportCustomContent
