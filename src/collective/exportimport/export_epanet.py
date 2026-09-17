@@ -63,7 +63,10 @@ class ExportCustomContent(ExportContent):
     OLD_ROOT = None
 
     # Target subsite where the content will be imported.
-    TARGET_ROOT = "https://demo-www.eea.europa.eu/en/epanet"
+    # For :class:`ExportCustomContent` (``@@export_custom_content``) this is
+    # intentionally unset; callers must pass ``target_root`` as a request
+    # parameter so the view cannot silently rewrite URLs to the wrong subsite.
+    TARGET_ROOT = None
 
     # eea-volto-blocks-converter endpoint.
     CONVERTER_URL = "http://localhost:8000/toblocks"
@@ -138,10 +141,17 @@ class ExportCustomContent(ExportContent):
 
     def update(self):
         """Read runtime configuration from request or class attributes."""
-        self.target_root = (
-            self.request.form.get("target_root", self.TARGET_ROOT) or self.TARGET_ROOT
-        )
-        self.target_root = self.target_root.rstrip("/")
+        target_root = self.request.form.get("target_root", self.TARGET_ROOT)
+        if target_root:
+            self.target_root = target_root.rstrip("/")
+        elif getattr(self, "target_root", None):
+            # A subclass may have set a default via self.target_root.
+            self.target_root = self.target_root.rstrip("/")
+        else:
+            raise ValueError(
+                "target_root is required for @@export_custom_content. "
+                "Pass e.g. ?target_root=https://demo-www.eea.europa.eu/en/climate-energy"
+            )
 
         self.converter_url = (
             self.request.form.get("converter_url", self.CONVERTER_URL)
@@ -771,5 +781,13 @@ class ExportCustomContent(ExportContent):
         logger.info("Wrote %s", report_path)
 
 
-# Backwards-compatible alias
-ExportEpanet = ExportCustomContent
+
+class ExportEpanet(ExportCustomContent):
+    """Backwards-compatible EPANET export view.
+
+    This is a thin subclass that restores the original EPANET-specific defaults
+    so existing scripts and URLs using ``@@export_epanet`` continue to work
+    without passing ``target_root`` explicitly.
+    """
+
+    TARGET_ROOT = "https://demo-www.eea.europa.eu/en/epanet"
