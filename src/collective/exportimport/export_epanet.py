@@ -235,6 +235,95 @@ class ExportCustomContent(ExportContent):
             return None
         return item
 
+
+    def export_content(self):
+        """Override base export to add optional pagination and list-yield support.
+
+        This keeps the EPANET-branch extra behavior (``p``/``nrOfHits`` query
+        parameters and yielding multiple items from one serialized object)
+        inside :class:`ExportCustomContent` without touching the base
+        :class:`ExportContent` implementation used by ``@@export_content``.
+        """
+        query = self.build_query()
+        catalog = api.portal.get_tool("portal_catalog")
+        brains = catalog.unrestrictedSearchResults(**query)
+        p = int(self.request.get("p", "0") or "0")
+        nrOfHits = int(self.request.get("nrOfHits", "0") or "0")
+        cindex = 0
+        logger.info(u"Exporting {} {}".format(len(brains), self.portal_type))
+
+        # Override richtext serializer to export links using resolveuid/xxx
+        alsoProvides = __import__(
+            "zope.interface",
+            fromlist=["alsoProvides"],
+        ).alsoProvides
+        from collective.exportimport.serializer import IRawRichTextMarker
+        alsoProvides(self.request, IRawRichTextMarker)
+
+        for index, brain in enumerate(brains, start=1):
+            skip = False
+            if brain.UID in self.DROP_UIDS:
+                continue
+
+            for drop in self.DROP_PATHS:
+                if drop in brain.getPath():
+                    skip = True
+
+            if skip:
+                continue
+
+            if p and nrOfHits:
+                startIndex = (p - 1) * nrOfHits
+                endIndex = p * nrOfHits
+                if cindex < startIndex:
+                    cindex += 1
+                    continue
+                if cindex >= endIndex:
+                    break
+                cindex += 1
+
+            if not index % 100:
+                logger.info(u"Handled {} items...".format(index))
+            try:
+                obj = brain.getObject()
+            except Exception:
+                msg = u"Error getting brain {}".format(brain.getPath())
+                self.errors.append({"path": None, "message": msg})
+                logger.exception(msg, exc_info=True)
+                continue
+            if obj is None:
+                msg = u"brain.getObject() is None {}".format(brain.getPath())
+                logger.error(msg)
+                self.errors.append({"path": None, "message": msg})
+                continue
+            obj = self.global_obj_hook(obj)
+            if not obj:
+                continue
+            try:
+                self.safe_portal_type = fix_portal_type(obj.portal_type)
+                serializer = getMultiAdapter((obj, self.request), ISerializeToJson)
+                if IPloneSiteRoot.providedBy(obj):
+                    item = serializer()
+                elif getattr(aq_base(obj), "isPrincipiaFolderish", False):
+                    item = serializer(include_items=False)
+                elif ICollection.providedBy(obj):
+                    item = serializer(include_items=False)
+                else:
+                    item = serializer()
+                item = self.update_export_data(item, obj)
+                if not item:
+                    continue
+
+                if isinstance(item, list):
+                    for i in item:
+                        yield i
+                else:
+                    yield item
+            except Exception:
+                msg = u"Error exporting {}".format(obj.absolute_url())
+                self.errors.append({"path": obj.absolute_url(), "message": msg})
+                logger.exception(msg, exc_info=True)
+
     # ----------------------------------------------------------------------
     # Helpers: object-level inspection
     # ----------------------------------------------------------------------
