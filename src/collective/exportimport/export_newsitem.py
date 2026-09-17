@@ -164,3 +164,15 @@ class ExportNewsItem(ExportCustomContent):
             "styles": {},
             "variation": "cardsCarousel",
         }
+
+
+class ExportEpanetNewsItem(ExportNewsItem):
+    """Backwards-compatible EPANET News Item export view.
+
+    This subclass restores the original EPANET-specific ``TARGET_ROOT`` default
+    so existing scripts and URLs using ``@@export_newsItem`` continue to work
+    without passing ``target_root`` explicitly.
+    """
+
+    TARGET_ROOT = "https://demo-www.eea.europa.eu/en/epanet"
+
