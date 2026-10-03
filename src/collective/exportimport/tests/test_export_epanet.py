@@ -55,6 +55,25 @@ class TestExportEpanet(unittest.TestCase):
         self.assertEqual(view.transform_errors, [])
         return {item["@id"]: item for item in items}
 
+    def test_subsite_parent_uid(self):
+        self.request.form.update({"target_root": TARGET})
+        view = api.content.get_view("export_epanet", self.portal, self.request)
+        view.update()
+        # /en on www.eea.europa.eu and demo-www
+        self.assertEqual(view.ctx.subsite_parent_uid, "4b5a784a7bd543b39d8a4feb2ab8a4d7")
+
+        self.request.form["subsite_parent_uid"] = "f" * 32
+        view.update()
+        self.assertEqual(view.ctx.subsite_parent_uid, "f" * 32)
+
+    def test_form_keeps_the_query_string(self):
+        query = "target_root=https%3A//www.example.org/en/epanet&subsite_parent_uid=abc"
+        self.request.environ["QUERY_STRING"] = query
+        self.request.form.update({"target_root": TARGET})
+        view = api.content.get_view("export_epanet", self.portal, self.request)
+        html = view()
+        self.assertIn('action="{}?{}"'.format(self.request.URL, query.replace("&", "&amp;")), html)
+
     def block_types(self, item):
         return [item["blocks"][uid]["@type"] for uid in item["blocks_layout"]["items"]]
 

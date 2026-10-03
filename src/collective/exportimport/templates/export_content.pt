@@ -15,7 +15,7 @@
 
       <p class="documentDescription" i18n:translate="">Select which content to export as a json-file.</p>
 
-        <form id="export_content" action="@@export_content" tal:attributes="action request/URL" method="post" enctype="multipart/form-data">
+        <form id="export_content" action="@@export_content" tal:attributes="action python:getattr(view, 'form_action', None) or request.URL" method="post" enctype="multipart/form-data">
 
             <div class="field mb-3">
               <label for="portal_type">

@@ -36,15 +36,16 @@ class ExportCustomContent(ExportContent):
     resolveuid normalization and Slate clean-up. The site root's default page
     becomes the target subsite's own blocks.
 
-    The resulting JSON is imported on the target with "Update existing
-    content" (``handle_existing_content=2``) at the site root; the subsite
-    must exist there.
+    The subsite must exist on the target. The resulting JSON is imported there
+    with "Update existing content" (``handle_existing_content=2``), at the
+    subsite (``/en/epanet/@@import_content``) when ``subsite_parent_uid`` is
+    the UID of the subsite's parent on that site, otherwise at the site root.
 
-    Usage::
+    Usage (query parameters are kept when the form is submitted)::
 
         @@export_custom_content?target_root=https://demo-www.eea.europa.eu/en/epanet
             &converter_url=http://localhost:8000/toblocks
-            [&subsite_parent_uid=<UID of the subsite's parent on the target>]
+            &subsite_parent_uid=<UID of the subsite's parent on the target>
 
     Report artifacts are written to ``<clienthome>/custom-export-reports/``:
     manifest.json, collections.json, unconvertible.json, MIGRATION_REPORT.md.
@@ -73,6 +74,17 @@ class ExportCustomContent(ExportContent):
 
     # Path below the subsite whose logo table becomes a teaser grid, or None.
     TEASER_PAGE = None
+
+    # UID of the subsite's parent on the target. The subsite is a navigation
+    # root, so when importing at the subsite the importer finds this parent
+    # only by UID.
+    SUBSITE_PARENT_UID = None
+
+    @property
+    def form_action(self):
+        """Submit to the same URL with its query string (target_root etc.)."""
+        query = self.request.get("QUERY_STRING")
+        return self.request.URL + ("?" + query if query else "")
 
     def update(self):
         """Read runtime configuration from request or class attributes."""
@@ -114,7 +126,9 @@ class ExportCustomContent(ExportContent):
             resolve_uid=self._resolve_uid,
             site_default_page=self._default_page_id(portal),
             teaser_page=self.TEASER_PAGE,
-            subsite_parent_uid=self.request.form.get("subsite_parent_uid") or None,
+            subsite_parent_uid=(
+                self.request.form.get("subsite_parent_uid") or self.SUBSITE_PARENT_UID
+            ),
         )
 
         # Runtime state used for reports.
@@ -476,8 +490,12 @@ class ExportEpanet(ExportCustomContent):
     """``@@export_epanet``: the EPANET site as an import-ready subsite.
 
     Defaults ``target_root`` to the EEA subsite and turns the member logo
-    table on ``/our-group`` into a teaser grid.
+    table on ``/our-group`` into a teaser grid. The default parent UID is
+    ``/en`` on www.eea.europa.eu and demo-www (the same object), so the file
+    is imported at ``/en/epanet/@@import_content`` there; another site passes
+    its own ``subsite_parent_uid``.
     """
 
     TARGET_ROOT = "https://demo-www.eea.europa.eu/en/epanet"
     TEASER_PAGE = "/our-group"
+    SUBSITE_PARENT_UID = "4b5a784a7bd543b39d8a4feb2ab8a4d7"
