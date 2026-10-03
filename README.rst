@@ -32,6 +32,278 @@ See also the training on migrating with ``exportimport``: https://2024.training.
 .. contents:: Contents
     :local:
 
+EEA: EPANET migration with ``@@export_epanet``
+==============================================
+
+This ``epanet`` branch of the EEA fork adds a view that exports the EPANET
+site (``epanet.eea.europa.eu``, classic Plone 5.2) as **one JSON file that is
+imported directly** into the EEA website subsite ``/en/epanet`` (Volto). The
+whole migration happens during the export; nothing has to be run on the JSON
+afterwards.
+
+How it works
+------------
+
+``@@export_epanet`` is ``@@export_content`` with one extra step: every
+serialized item goes through
+``collective.exportimport.epanet_transforms.transform_item()`` (called from the
+view's ``global_dict_hook``). The steps, in order:
+
+#. **Filter** (``global_obj_hook``): types other than Folder, Document, News
+   Item, Collection, File, Image and Link are skipped. Private items are
+   skipped, except Links (other pages link to them). ``include_private=1``
+   keeps private items.
+#. **Serialize** as ``@@export_content`` does, with rich text kept raw so
+   internal links stay ``resolveuid/<uid>``.
+#. **Types**: Folder and Collection become Document; the others keep their
+   type.
+#. **Fields**: serializer noise is dropped, and so is ``review_state``. Without
+   it the importer runs no workflow transition, so the original ``effective``
+   dates are kept; the state arrives through ``workflow_history``.
+   ``en-gb`` and empty languages become ``en``.
+#. **URLs**: ``@id`` and ``parent`` move below ``target_root``. Top-level items
+   get the subsite as parent (found by path).
+#. **Blocks**: a title block (News Items: content type hidden); for News Items
+   the EEA press release header (``layoutSettings``, ``description``,
+   ``dividerBlock``), for other pages a ``description`` block when there is a
+   description; then the rich text converted to Volto blocks by
+   `eea-volto-blocks-converter <https://github.com/eea/volto-blocks-converter>`_.
+#. **Collections**: a ``listing`` block running the Collection's own query.
+   Path criteria are rewritten to a site path below the subsite.
+#. **Default pages**: a Folder gets its default page's body appended to its
+   blocks (Volto shows a container's own blocks). The default page is exported
+   as well, so links to it keep working.
+#. **Inline images** become ``image`` blocks before their paragraph; image
+   URLs are normalized to ``/resolveuid/<uid>[/@@images/image/<scale>]``.
+#. **Image floats**: ``align`` is taken from the source HTML (an inline
+   ``float`` style, else the ``image-left``/``image-right`` class).
+#. **Member logos**: the logo table on ``/our-group`` becomes a ``group`` of
+   ``teaserGrid`` blocks (4 per row) with the agency link as ``external_link``.
+#. **Slate clean-up**: Slate elements without any text leaf are removed (for
+   example ``<strong><img/></strong>`` once the image is moved out); the Slate
+   editor crashes on them.
+#. **Subsite**: the site root's default page (``front-page``) is not exported
+   as a page. Its blocks are put on a ``Subsite`` item for ``target_root``
+   that updates the existing subsite. That item has no ``UID`` (the subsite
+   keeps its own) and its parent carries ``subsite_parent_uid``.
+
+Reports are written to ``<clienthome>/custom-export-reports/`` (or
+``$COLLECTIVE_EXPORTIMPORT_CENTRAL_DIRECTORY/custom-export-reports/``):
+``manifest.json``, ``collections.json``, ``unconvertible.json`` and
+``MIGRATION_REPORT.md`` (counts, converter failures, transform errors, Slate
+elements without text).
+
+The view replaces the scripts that were run by hand on an ``@@export_content``
+file in ``eea.docker.plonesaas/scripts``:
+
+================================  ==============================================
+Script                            Now done by
+================================  ==============================================
+``validate_export.py``            ``MIGRATION_REPORT.md`` / ``manifest.json``
+``epanet_migrate.py``             steps 3 to 9
+``apply_news_default_blocks.py``  step 6 (no trailing listing block)
+``remove_listing_blocks.py``      step 6 (no listing block is added)
+``fix_news_image_alignment.py``   step 10, from the source HTML instead of the
+                                  rendered production pages
+``build_teaser_grid.py``          step 11
+``make_subsite_update.py``        step 13, in the same file
+``split_transformed_json.py``     not needed; import a large file from the
+                                  server (see below)
+================================  ==============================================
+
+Views and parameters
+--------------------
+
+``@@export_epanet``
+    The EPANET export with the defaults below.
+``@@export_newsItem``
+    The same, News Items only.
+``@@export_custom_content`` / ``@@export_custom_newsItem``
+    The same pipeline without EPANET defaults: ``target_root`` is required,
+    no teaser grid, no default ``subsite_parent_uid``.
+
+Request parameters (add them to the URL; the form keeps them when submitted),
+with their ``@@export_epanet`` defaults:
+
+``target_root``
+    URL of the target subsite. Default
+    ``https://demo-www.eea.europa.eu/en/epanet``.
+``subsite_parent_uid``
+    UID of the subsite's parent (``/en``) on the target. Default
+    ``4b5a784a7bd543b39d8a4feb2ab8a4d7``, ``/en`` on www.eea.europa.eu and
+    demo-www (the same object on both).
+``converter_url``
+    The blocks converter endpoint. Default ``http://localhost:8000/toblocks``.
+``include_private``
+    Also export private items. Default off; private Links are always exported.
+``old_root``
+    URL of the source site root. Default: the portal URL.
+``p``, ``nrOfHits``
+    Export only page ``p`` of ``nrOfHits`` items. Default off.
+
+Only paths matter on import, not hosts: parents are found by UID, or by their
+path relative to the site root (``/en/epanet/...``). The default
+``target_root`` therefore works for www.eea.europa.eu, demo-www and a local
+site alike.
+
+Why ``subsite_parent_uid``: the file is imported at the subsite
+(``/en/epanet/@@import_content``). The subsite is a navigation root, so the
+importer ignores a parent found by path outside it and finds ``/en`` only by
+UID. Without a matching UID, import at the site root instead
+(``<site>/@@import_content``).
+
+Before you start
+----------------
+
+* The **blocks converter** runs and the EPANET Plone instance can reach it at
+  ``converter_url``. It must include inline-image extraction and multi-row
+  layout tables (branch ``extract-inline-images``,
+  `volto-blocks-converter#13 <https://github.com/eea/volto-blocks-converter/pull/13>`_);
+  older images do not. In ``eea.docker.plonesaas`` it is the
+  ``volto-blocks-converter`` service, reachable from the Plone containers at
+  ``http://volto-blocks-converter:8000/toblocks``. Check it with::
+
+      curl -s -X POST -H 'Content-Type: application/json' \
+           -d '{"html": "<p>ping</p>"}' <converter_url>
+
+* The **subsite exists** on the target at ``/en/epanet`` (type ``Subsite``),
+  created by hand. If it is missing, the importer creates containers along the
+  path instead (a Document ``/en/epanet`` with a nested ``/en/epanet/epanet``).
+* None of the exported content is on the target yet, or it is an earlier
+  import of the same export. Items keep their source UIDs; a copy elsewhere
+  makes the importer assign new UIDs and internal links break.
+
+Export (on epanet.eea.europa.eu)
+--------------------------------
+
+#. Open ``https://epanet.eea.europa.eu/@@export_epanet`` as a Manager. For a
+   converter that is not on ``localhost:8000``, open
+   ``@@export_epanet?converter_url=http://volto-blocks-converter:8000/toblocks``.
+#. Select the types Folder, Document, News Item, Collection, File, Image and
+   Link.
+#. *Include blobs*: **as base-64 encoded strings**.
+#. Keep *Modify exported data for migrations* checked.
+#. Choose *Download to local machine*, or *Save to file on server* for a file
+   to import from the server (it is about 180 MB), and export.
+#. Read ``custom-export-reports/MIGRATION_REPORT.md``: transform errors,
+   converter failures and Slate elements without text should all be 0.
+
+The same export as one URL, e.g. for ``curl``::
+
+    https://epanet.eea.europa.eu/@@export_epanet?form.submitted=1&include_blobs=1
+        &portal_type=Folder&portal_type=Document&portal_type=News%20Item
+        &portal_type=Collection&portal_type=File&portal_type=Image&portal_type=Link
+
+Import on www.eea.europa.eu or demo-www
+---------------------------------------
+
+The Plone site id is ``admin`` on both.
+
+#. Open ``https://www.eea.europa.eu/admin/en/epanet/@@import_content``
+   (demo-www: ``https://demo-www.eea.europa.eu/admin/en/epanet/@@import_content``).
+#. Upload the file, or pick it as a file on the server. For the server option,
+   copy it to ``$COLLECTIVE_EXPORTIMPORT_CENTRAL_DIRECTORY`` or the instance's
+   ``import`` directory first; use this when the upload is rejected for size.
+#. *Handle existing content*: **Update: Reuse and only overwrite imported
+   data** (``handle_existing_content=2``). Import.
+#. Expect "Imported 273 items": 272 pages, files and images plus the subsite
+   update.
+#. Publish ``/en/epanet``. Then refresh the security of the imported content
+   (the importer sets the workflow state without updating permissions):
+
+   * ZMI ``portal_workflow`` > *Update security settings*
+     (``updateRoleMappings``), and
+   * ZMI ``portal_catalog`` > *Indexes* > ``allowedRolesAndUsers`` > *Reindex*.
+
+#. Purge the frontend caches and check ``/en/epanet`` as an anonymous user.
+
+Import on a local site
+----------------------
+
+A local EEA website backend (e.g. ``http://localhost:8080/Plone``) has its own
+``/en`` UID, so the export needs it:
+
+#. Read the UID of ``/en``::
+
+       curl -s -u admin:admin -H 'Accept: application/json' \
+            http://localhost:8080/Plone/++api++/en | python3 -c \
+            "import json, sys; print(json.load(sys.stdin)['UID'])"
+
+#. Create the subsite ``epanet`` (type ``Subsite``) in ``/en``.
+#. Export on the EPANET site (or a local copy of it) with that UID::
+
+       @@export_epanet?subsite_parent_uid=<UID of /en>
+
+   then as in `Export (on epanet.eea.europa.eu)`_.
+#. Import at ``http://localhost:8080/Plone/en/epanet/@@import_content`` with
+   *Update* (``handle_existing_content=2``), then publish the subsite and
+   refresh security as above.
+
+Alternatively export without changing ``subsite_parent_uid`` and import at the
+site root, ``http://localhost:8080/Plone/@@import_content``.
+
+To start over, delete ``/en/epanet``, create the subsite again and import
+again.
+
+What to check after an import
+-----------------------------
+
+* ``/en/epanet`` kept its UID and shows the front page (title, text, columns).
+* Exactly one ``Subsite``; no ``/en/epanet/front-page``, no
+  ``/en/epanet/epanet``, nothing new in the site root.
+* ``/en/epanet/reports-letters/reports`` lists the reports (a listing over the
+  Files in ``/en/epanet/reports-letters``).
+* ``/en/epanet/our-group`` shows the member logos as teaser grids.
+* Floated images, e.g. on
+  ``/en/epanet/reports-letters/plenary-meetings/39th-epa-network-plenary-brussels``.
+* Pages open in the Volto editor without errors.
+
+Troubleshooting
+---------------
+
+``KeyError: 'title'`` in ``create_container``
+    The subsite's parent was not found: ``subsite_parent_uid`` is not the UID
+    of ``/en`` on this site. Export again with the right UID, or import at the
+    site root. Nothing is imported (the transaction is aborted).
+A Document ``/en/epanet`` or a subsite ``/en/epanet/epanet``
+    The subsite did not exist when importing. Delete ``/en/epanet``, create the
+    subsite and import again.
+Pages without body text, entries in ``unconvertible.json``
+    The converter could not be reached or failed; check ``converter_url``.
+Imported items get new UIDs and links break
+    Items with the same UIDs already existed elsewhere on the target. Remove
+    them and import again.
+``effective`` dates differ from the source by a fixed offset
+    Seen in local tests: 133 items 1.5 hours earlier than in the source, which
+    stores dates without a timezone. The same happens with a plain
+    ``@@export_content`` file; the cause has not been investigated.
+
+Files on this branch
+--------------------
+
+``src/collective/exportimport/epanet_transforms.py``
+    The transforms (steps 3 to 13), plain functions without Plone imports.
+    Site access goes through ``Context`` callbacks.
+``src/collective/exportimport/export_epanet.py``
+    ``ExportCustomContent`` (``@@export_custom_content``) and ``ExportEpanet``
+    (``@@export_epanet``): filtering, the transform call, the ``Context``
+    callbacks (converter, default page HTML, UID lookup), reports.
+``src/collective/exportimport/export_newsitem.py``
+    The News Item-only views.
+``src/collective/exportimport/configure.zcml``
+    Registers the views above.
+``src/collective/exportimport/templates/export_content.pt``
+    The export form submits to ``view.form_action`` when the view defines it
+    (the EPANET views: the URL with its query string).
+``src/collective/exportimport/tests/test_epanet_transforms.py``
+    Unit tests for the transforms.
+``src/collective/exportimport/tests/test_export_epanet.py``
+    Integration tests for ``@@export_epanet`` (converter faked).
+
+Run the tests with the usual test runner, e.g.::
+
+    bin/test -s collective.exportimport -t epanet
+
 Features
 ========
 
