@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 """Integration tests for @@export_epanet (blocks converter faked)."""
+from collective.exportimport.interfaces import IMigrationMarker
 from collective.exportimport.testing import COLLECTIVE_EXPORTIMPORT_INTEGRATION_TESTING
+from DateTime import DateTime
 from plone import api
 from plone.app.testing import login
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.textfield.value import RichTextValue
+from zope.interface import alsoProvides
 
+import json
 import re
 import unittest
 import uuid
@@ -74,6 +78,56 @@ class TestExportEpanet(unittest.TestCase):
         html = view()
         self.assertIn('action="{}?{}"'.format(self.request.URL, query.replace("&", "&amp;")), html)
 
+    def test_import_indexes_the_state_and_keeps_effective(self):
+        """Export, delete, import: the catalog knows the published state (the
+        navigation lists published items only) and effective is unchanged."""
+        api.content.create(container=self.portal, type="Folder", id="target", title="Target")
+        target = self.portal.absolute_url() + "/target"
+        dated = api.content.create(container=self.portal, type="Document", id="about", title="About")
+        dated.setEffectiveDate(DateTime("2019-09-04T12:57:00+00:00"))
+        undated = api.content.create(container=self.portal, type="Document", id="contact", title="Contact")
+        for obj in (dated, undated):
+            api.content.transition(obj=obj, to_state="published")
+        # published, but without an effective date (as EPANET's front page)
+        undated.setEffectiveDate(None)
+        undated.reindexObject()
+
+        self.request.form.update({"target_root": target})
+        view = api.content.get_view("export_epanet", self.portal, self.request)
+        view._post_json = fake_converter
+        view.portal_type = ["Document"]
+        view.path = "/".join(self.portal.getPhysicalPath())
+        view.depth = -1
+        view.migration = True
+        view.include_revisions = False
+        view.errors = []
+        view.update()
+        data = json.loads(json.dumps(list(view.export_content())))
+        self.assertNotIn("review_state", [i for i in data if i["id"] == "contact"][0])
+        api.content.delete(objects=[dated, undated])
+
+        # what @@import_content does per item; its do_import also commits
+        importer = api.content.get_view("import_content", self.portal, self.request)
+        importer.portal = self.portal
+        importer.limit = None
+        importer.commit = None
+        importer.import_to_current_folder = False
+        importer.handle_existing_content = 0
+        importer.import_old_revisions = False
+        alsoProvides(self.request, IMigrationMarker)
+        importer.import_new_content(data)
+
+        catalog = api.portal.get_tool("portal_catalog")
+        about = self.portal["target"]["about"]
+        self.assertEqual(api.content.get_state(about), "published")
+        self.assertTrue(catalog(UID=about.UID(), review_state="published"))
+        self.assertEqual(
+            about.effective().timeTime(), DateTime("2019-09-04T12:57:00+00:00").timeTime()
+        )
+        contact = self.portal["target"]["contact"]
+        self.assertEqual(api.content.get_state(contact), "published")
+        self.assertEqual(contact.EffectiveDate(), "None")
+
     def block_types(self, item):
         return [item["blocks"][uid]["@type"] for uid in item["blocks_layout"]["items"]]
 
@@ -107,6 +161,7 @@ class TestExportEpanet(unittest.TestCase):
             container=self.portal, type="Link", id="agency", title="Agency",
             remoteUrl="https://agency.example.org",
         )
+        self.portal["news"].setEffectiveDate(DateTime("2019-09-04T12:57:00+00:00"))
         for obj_id in ("group", "news", "reports"):
             api.content.transition(obj=self.portal[obj_id], to_state="published")
         api.content.transition(obj=folder["members"], to_state="published")
@@ -117,8 +172,8 @@ class TestExportEpanet(unittest.TestCase):
 
         self.assertNotIn(TARGET + "/draft", items)  # private
         self.assertIn(TARGET + "/agency", items)  # private Link: a link target
-        for item in items.values():
-            self.assertNotIn("review_state", item)
+        self.assertEqual(items[TARGET + "/agency"]["review_state"], "private")
+        self.assertEqual(items[TARGET + "/news"]["review_state"], "published")
 
         group = items[TARGET + "/group"]
         self.assertEqual(group["@type"], "Document")

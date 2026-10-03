@@ -62,20 +62,37 @@ def types(result):
 
 class TestTransformItem(unittest.TestCase):
 
-    def test_fields_urls_and_review_state(self):
+    def test_fields_and_urls(self):
         result = transforms.transform_item(
             item(layout="document_view", text={"data": ""}), context()
         )
         self.assertEqual(result["@id"], TARGET + "/page")
         self.assertEqual(result["language"], "en")
-        # the importer must not run a transition: it would reset effective
-        self.assertNotIn("review_state", result)
         self.assertNotIn("layout", result)
         self.assertNotIn("text", result)
         # top-level items hang below the existing subsite, found by path
         self.assertEqual(result["parent"]["@id"].rstrip("/"), TARGET)
         self.assertEqual(result["parent"]["@type"], "Subsite")
         self.assertNotIn("UID", result["parent"])
+
+    def test_review_state_is_kept(self):
+        # the importer's transition updates the catalog's review_state index
+        result = transforms.transform_item(
+            item(effective="2019-09-04T12:57:00"), context()
+        )
+        self.assertEqual(result["review_state"], "published")
+        self.assertEqual(result["effective"], "2019-09-04T12:57:00")
+
+        private = transforms.transform_item(
+            item(**{"@type": "Link", "review_state": "private"}), context()
+        )
+        self.assertEqual(private["review_state"], "private")
+
+    def test_published_without_effective_has_no_review_state(self):
+        # publishing would set the empty effective date to now
+        result = transforms.transform_item(item(effective=None), context())
+        self.assertNotIn("review_state", result)
+        self.assertIsNone(result["effective"])
 
     def test_nested_parent_keeps_its_uid(self):
         result = transforms.transform_item(

@@ -47,15 +47,11 @@ TYPE_MAP = {
 BLOCKS_TYPES = {"Document", "News Item"}
 
 # Serializer noise or source-only fields that are never imported.
-# ``review_state`` is dropped on purpose: with it the importer runs a workflow
-# transition, which resets ``effective``. The state still arrives through
-# ``workflow_history``.
 DROP_FIELDS = {
     "is_folderish",
     "layout",
     "lock",
     "nextPreviousEnabled",
-    "review_state",
     "type_title",
     "version",
     "versioning_enabled",
@@ -157,6 +153,7 @@ def transform_item(item: dict, ctx: Context) -> dict:
     top_level = is_top_level(item, ctx.old_root)
 
     new_item = filter_fields(item)
+    keep_effective_date(new_item)
     new_item["@type"] = new_type
     new_item["language"] = normalize_language(item.get("language"))
     rewrite_urls(new_item, ctx, top_level)
@@ -208,6 +205,20 @@ def html_of(item: dict) -> str:
 def filter_fields(item: dict) -> dict:
     """Drop serializer noise; keep known and unknown fields."""
     return {key: value for key, value in item.items() if key not in DROP_FIELDS}
+
+
+def keep_effective_date(item: dict) -> None:
+    """Drop ``review_state`` where publishing would invent an effective date.
+
+    The importer runs a transition to ``review_state``; that also updates the
+    catalog's ``review_state`` index (the workflow history it imports
+    afterwards does not), so the navigation lists the item. Publishing keeps
+    an existing ``effective`` but sets an empty one to now, so a published item
+    without one goes without ``review_state``; its state still arrives through
+    ``workflow_history``.
+    """
+    if item.get("review_state") == "published" and not item.get("effective"):
+        item.pop("review_state")
 
 
 def normalize_language(lang: Optional[str]) -> str:

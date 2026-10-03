@@ -57,10 +57,14 @@ view's ``global_dict_hook``). The steps, in order:
    internal links stay ``resolveuid/<uid>``.
 #. **Types**: Folder and Collection become Document; the others keep their
    type.
-#. **Fields**: serializer noise is dropped, and so is ``review_state``. Without
-   it the importer runs no workflow transition, so the original ``effective``
-   dates are kept; the state arrives through ``workflow_history``.
-   ``en-gb`` and empty languages become ``en``.
+#. **Fields**: serializer noise is dropped. ``review_state`` is kept: the
+   importer runs a transition to it, which also updates the catalog's
+   ``review_state`` index (the navigation lists published items only; the
+   imported ``workflow_history`` alone does not reindex). Publishing keeps an
+   existing ``effective`` date but sets an empty one to now, so a published
+   item without ``effective`` is exported without ``review_state``; its state
+   still arrives through ``workflow_history``. ``en-gb`` and empty languages
+   become ``en``.
 #. **URLs**: ``@id`` and ``parent`` move below ``target_root``. Top-level items
    get the subsite as parent (found by path).
 #. **Blocks**: a title block (News Items: content type hidden); for News Items
@@ -208,16 +212,12 @@ The Plone site id is ``admin`` on both.
    data** (``handle_existing_content=2``). Import.
 #. Expect "Imported 273 items": 272 pages, files and images plus the subsite
    update.
-#. Publish ``/en/epanet``. Then refresh the workflow state and security of the
-   imported content. The importer sets the state from ``workflow_history``
-   without updating permissions or the catalog's ``review_state`` index, so
-   pages without children stay out of the navigation (it lists published
-   items only) and may not be visible to anonymous users:
+#. Publish ``/en/epanet``. Then refresh the security of the imported content
+   (the importer sets the workflow history without updating permissions):
 
    * ZMI ``portal_workflow`` > *Update security settings*
      (``updateRoleMappings``), and
-   * ZMI ``portal_catalog`` > *Indexes* > select ``review_state`` and
-     ``allowedRolesAndUsers`` > *Reindex*.
+   * ZMI ``portal_catalog`` > *Indexes* > ``allowedRolesAndUsers`` > *Reindex*.
 
 #. Purge the frontend caches and check ``/en/epanet`` as an anonymous user.
 
@@ -277,8 +277,11 @@ A Document ``/en/epanet`` or a subsite ``/en/epanet/epanet``
     subsite and import again.
 Pages missing from the navigation (About, Reports and letters, ...)
     The catalog's ``review_state`` index still has the state from before the
-    import; pages with children are reindexed when children are added, the
-    others are not. Reindex ``review_state`` (see the import steps).
+    import. That happens with files exported before ``review_state`` was kept,
+    and for published items without an ``effective`` date. Pages with children
+    are reindexed when children are added, the others are not. ZMI
+    ``portal_catalog`` > *Indexes* > ``review_state`` > *Reindex* fixes it; it
+    does not change any dates.
 Pages without body text, entries in ``unconvertible.json``
     The converter could not be reached or failed; check ``converter_url``.
 Imported items get new UIDs and links break
