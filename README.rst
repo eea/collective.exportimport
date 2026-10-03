@@ -208,12 +208,16 @@ The Plone site id is ``admin`` on both.
    data** (``handle_existing_content=2``). Import.
 #. Expect "Imported 273 items": 272 pages, files and images plus the subsite
    update.
-#. Publish ``/en/epanet``. Then refresh the security of the imported content
-   (the importer sets the workflow state without updating permissions):
+#. Publish ``/en/epanet``. Then refresh the workflow state and security of the
+   imported content. The importer sets the state from ``workflow_history``
+   without updating permissions or the catalog's ``review_state`` index, so
+   pages without children stay out of the navigation (it lists published
+   items only) and may not be visible to anonymous users:
 
    * ZMI ``portal_workflow`` > *Update security settings*
      (``updateRoleMappings``), and
-   * ZMI ``portal_catalog`` > *Indexes* > ``allowedRolesAndUsers`` > *Reindex*.
+   * ZMI ``portal_catalog`` > *Indexes* > select ``review_state`` and
+     ``allowedRolesAndUsers`` > *Reindex*.
 
 #. Purge the frontend caches and check ``/en/epanet`` as an anonymous user.
 
@@ -254,6 +258,9 @@ What to check after an import
 * ``/en/epanet/reports-letters/reports`` lists the reports (a listing over the
   Files in ``/en/epanet/reports-letters``).
 * ``/en/epanet/our-group`` shows the member logos as teaser grids.
+* The navigation lists About, Members and Our work, with Interest groups,
+  Reports and letters, Plenary meetings and Events and projects below Our
+  work.
 * Floated images, e.g. on
   ``/en/epanet/reports-letters/plenary-meetings/39th-epa-network-plenary-brussels``.
 * Pages open in the Volto editor without errors.
@@ -268,6 +275,10 @@ Troubleshooting
 A Document ``/en/epanet`` or a subsite ``/en/epanet/epanet``
     The subsite did not exist when importing. Delete ``/en/epanet``, create the
     subsite and import again.
+Pages missing from the navigation (About, Reports and letters, ...)
+    The catalog's ``review_state`` index still has the state from before the
+    import; pages with children are reindexed when children are added, the
+    others are not. Reindex ``review_state`` (see the import steps).
 Pages without body text, entries in ``unconvertible.json``
     The converter could not be reached or failed; check ``converter_url``.
 Imported items get new UIDs and links break
