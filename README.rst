@@ -212,13 +212,10 @@ The Plone site id is ``admin`` on both.
    data** (``handle_existing_content=2``). Import.
 #. Expect "Imported 273 items": 272 pages, files and images plus the subsite
    update.
-#. Publish ``/en/epanet``. Then refresh the security of the imported content
-   (the importer sets the workflow history without updating permissions):
-
-   * ZMI ``portal_workflow`` > *Update security settings*
-     (``updateRoleMappings``), and
-   * ZMI ``portal_catalog`` > *Indexes* > ``allowedRolesAndUsers`` > *Reindex*.
-
+#. Publish ``/en/epanet`` if it is not published yet. Nothing else has to be
+   reindexed or updated: the importer's transition to each item's
+   ``review_state`` sets its permissions and catalog entries (Files and
+   Images have no workflow and follow their folder).
 #. Purge the frontend caches and check ``/en/epanet`` as an anonymous user.
 
 Import on a local site
@@ -240,8 +237,8 @@ A local EEA website backend (e.g. ``http://localhost:8080/Plone``) has its own
 
    then as in `Export (on epanet.eea.europa.eu)`_.
 #. Import at ``http://localhost:8080/Plone/en/epanet/@@import_content`` with
-   *Update* (``handle_existing_content=2``), then publish the subsite and
-   refresh security as above.
+   *Update* (``handle_existing_content=2``), then publish the subsite. No
+   reindexing is needed.
 
 Alternatively export without changing ``subsite_parent_uid`` and import at the
 site root, ``http://localhost:8080/Plone/@@import_content``.
@@ -275,13 +272,15 @@ Troubleshooting
 A Document ``/en/epanet`` or a subsite ``/en/epanet/epanet``
     The subsite did not exist when importing. Delete ``/en/epanet``, create the
     subsite and import again.
-Pages missing from the navigation (About, Reports and letters, ...)
-    The catalog's ``review_state`` index still has the state from before the
-    import. That happens with files exported before ``review_state`` was kept,
-    and for published items without an ``effective`` date. Pages with children
-    are reindexed when children are added, the others are not. ZMI
-    ``portal_catalog`` > *Indexes* > ``review_state`` > *Reindex* fixes it; it
-    does not change any dates.
+Pages missing from the navigation (About, Reports and letters, ...) or not visible to anonymous users
+    The item was imported without ``review_state``: a file exported before
+    ``review_state`` was kept, or a published item without an ``effective``
+    date. The importer then sets the workflow history only, without updating
+    permissions or the catalog (pages with children are reindexed when
+    children are added, the others are not). Fix it, without changing any
+    dates, in the ZMI: ``portal_workflow`` > *Update security settings*, then
+    ``portal_catalog`` > *Indexes* > ``review_state`` and
+    ``allowedRolesAndUsers`` > *Reindex*.
 Pages without body text, entries in ``unconvertible.json``
     The converter could not be reached or failed; check ``converter_url``.
 Imported items get new UIDs and links break

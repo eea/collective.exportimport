@@ -5,6 +5,7 @@ from collective.exportimport.testing import COLLECTIVE_EXPORTIMPORT_INTEGRATION_
 from DateTime import DateTime
 from plone import api
 from plone.app.testing import login
+from plone.app.testing import logout
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.textfield.value import RichTextValue
 from zope.interface import alsoProvides
@@ -127,6 +128,11 @@ class TestExportEpanet(unittest.TestCase):
         contact = self.portal["target"]["contact"]
         self.assertEqual(api.content.get_state(contact), "published")
         self.assertEqual(contact.EffectiveDate(), "None")
+
+        # anonymous users see it without updateRoleMappings or reindexing
+        logout()
+        self.assertTrue(catalog(UID=about.UID(), review_state="published"))
+        self.assertTrue(api.user.has_permission("View", obj=about))
 
     def block_types(self, item):
         return [item["blocks"][uid]["@type"] for uid in item["blocks_layout"]["items"]]
