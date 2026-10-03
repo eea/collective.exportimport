@@ -149,6 +149,18 @@ class TestExportEpanet(unittest.TestCase):
             text=html("<p>Our members</p>"),
         )
         folder.setDefaultPage("members")
+        meetings = api.content.create(
+            container=self.portal, type="Folder", id="meetings", title="Meetings"
+        )
+        meeting_query = [{"i": "portal_type",
+                          "o": "plone.app.querystring.operation.selection.any",
+                          "v": ["News Item"]}]
+        api.content.create(
+            container=meetings, type="Collection", id="meetings-1", title="Meetings",
+            text=html("<p>All plenary meetings</p>"), query=meeting_query,
+            sort_on="effective", sort_reversed=True,
+        )
+        meetings.setDefaultPage("meetings-1")
         api.content.create(
             container=self.portal, type="News Item", id="news", title="News",
             text=html(
@@ -168,8 +180,9 @@ class TestExportEpanet(unittest.TestCase):
             remoteUrl="https://agency.example.org",
         )
         self.portal["news"].setEffectiveDate(DateTime("2019-09-04T12:57:00+00:00"))
-        for obj_id in ("group", "news", "reports"):
+        for obj_id in ("group", "meetings", "news", "reports"):
             api.content.transition(obj=self.portal[obj_id], to_state="published")
+        api.content.transition(obj=meetings["meetings-1"], to_state="published")
         api.content.transition(obj=folder["members"], to_state="published")
 
         items = self.export(
@@ -185,6 +198,13 @@ class TestExportEpanet(unittest.TestCase):
         self.assertEqual(group["@type"], "Document")
         self.assertEqual(self.block_types(group), ["title", "slate"])
         self.assertEqual(group["parent"]["@type"], "Subsite")
+
+        # a Collection as default page: its text and its listing
+        folder_view = items[TARGET + "/meetings"]
+        self.assertEqual(self.block_types(folder_view), ["title", "slate", "listing"])
+        listing = folder_view["blocks"][folder_view["blocks_layout"]["items"][-1]]
+        self.assertEqual(listing["querystring"]["query"], meeting_query)
+        self.assertEqual(listing["querystring"]["sort_order"], "descending")
 
         news = items[TARGET + "/news"]
         self.assertEqual(

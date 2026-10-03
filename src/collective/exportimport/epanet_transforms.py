@@ -100,8 +100,10 @@ class Context(object):
     :param convert: ``convert(html) -> (blocks, layout)``; the blocks converter.
     :param old_site_path: physical path of the source site (``/epanet``); used
         to rewrite path criteria of Collections.
-    :param default_page_html: ``default_page_html(item) -> html or None`` for a
-        Folder whose landing content comes from a default page.
+    :param default_page: ``default_page(item) -> serialized item or None``: the
+        default page of a Folder, serialized like an exported item (``@type``,
+        ``text``, and for a Collection ``query``, ``sort_on``,
+        ``sort_reversed`` and ``limit``).
     :param resolve_uid: ``resolve_uid(uid) -> target URL or None``.
     :param site_default_page: id of the source site root's default page; its
         blocks are put on the subsite.
@@ -117,7 +119,7 @@ class Context(object):
         target_root: str,
         convert: Callable[[str], tuple],
         old_site_path: str = "",
-        default_page_html: Optional[Callable[[dict], Optional[str]]] = None,
+        default_page: Optional[Callable[[dict], Optional[dict]]] = None,
         resolve_uid: Optional[Callable[[str], Optional[str]]] = None,
         site_default_page: Optional[str] = None,
         teaser_page: Optional[str] = None,
@@ -127,7 +129,7 @@ class Context(object):
         self.target_root = target_root.rstrip("/")
         self.convert = convert
         self.old_site_path = (old_site_path or urlparse(self.old_root).path).rstrip("/")
-        self.default_page_html = default_page_html or (lambda item: None)
+        self.default_page = default_page or (lambda item: None)
         self.resolve_uid = resolve_uid or (lambda uid: None)
         self.site_default_page = site_default_page
         self.teaser_page = teaser_page
@@ -167,9 +169,10 @@ def transform_item(item: dict, ctx: Context) -> dict:
 
     default_html = None
     if old_type == "Folder":
-        default_html = ctx.default_page_html(item)
-        if default_html:
-            merge_default_page(new_item, default_html, ctx.convert)
+        page = ctx.default_page(item)
+        if page:
+            default_html = html_of(page)
+            merge_default_page(new_item, page, ctx)
 
     if new_item.get("blocks"):
         extract_inline_images(new_item)
@@ -345,17 +348,27 @@ def collection_listing_block(item: dict, ctx: Context) -> dict:
     }
 
 
-def merge_default_page(item: dict, html: str, convert: Callable) -> None:
-    """Append a default page's body (without its title) to a Folder's blocks."""
-    if not html.strip():
-        return
-    body_blocks, body_layout = convert(html)
+def merge_default_page(item: dict, page: dict, ctx: Context) -> None:
+    """Append a default page's body (without its title) to a Folder's blocks.
+
+    A Collection as default page also contributes its listing, so the Folder
+    shows the same items as the old site did.
+    """
     blocks = item.setdefault("blocks", {})
     layout = item.setdefault("blocks_layout", {"items": []})["items"]
-    for uid in body_layout:
-        if body_blocks[uid].get("@type") == "title":
-            continue
-        blocks[uid] = body_blocks[uid]
+    html = html_of(page)
+    if html.strip():
+        body_blocks, body_layout = ctx.convert(html)
+        for uid in body_layout:
+            if body_blocks[uid].get("@type") == "title":
+                continue
+            blocks[uid] = body_blocks[uid]
+            layout.append(uid)
+    if page.get("@type") == "Collection":
+        uid = new_uid()
+        listing = collection_listing_block(page, ctx)
+        listing["block"] = uid
+        blocks[uid] = listing
         layout.append(uid)
 
 

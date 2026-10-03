@@ -153,12 +153,34 @@ class TestTransformItem(unittest.TestCase):
     def test_folder_gets_its_default_page_body(self):
         html = "<p>Landing</p>"
         convert = FakeConverter({html: [{"@type": "title"}, slate({"text": "Landing"})]})
+        page = {"@type": "Document", "text": {"data": html}}
         result = transforms.transform_item(
             item(**{"@type": "Folder"}),
-            context(convert, default_page_html=lambda i: html),
+            context(convert, default_page=lambda i: page),
         )
         self.assertEqual(result["@type"], "Document")
         self.assertEqual(types(result), ["title", "slate"])
+
+    def test_folder_with_a_collection_as_default_page_gets_its_listing(self):
+        html = "<p>Our meetings</p>"
+        convert = FakeConverter({html: [slate({"text": "Our meetings"})]})
+        page = {
+            "@type": "Collection",
+            "text": {"data": html},
+            "query": [{"i": "portal_type",
+                       "o": "plone.app.querystring.operation.selection.any",
+                       "v": ["News Item"]}],
+            "sort_on": "effective",
+            "sort_reversed": True,
+            "limit": 1000,
+        }
+        result = transforms.transform_item(
+            item(**{"@type": "Folder"}), context(convert, default_page=lambda i: page)
+        )
+        self.assertEqual(types(result), ["title", "slate", "listing"])
+        listing = result["blocks"][result["blocks_layout"]["items"][-1]]
+        self.assertEqual(listing["querystring"]["query"], page["query"])
+        self.assertEqual(listing["querystring"]["sort_order"], "descending")
 
 
 class TestImages(unittest.TestCase):

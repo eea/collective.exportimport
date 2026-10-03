@@ -75,8 +75,11 @@ view's ``global_dict_hook``). The steps, in order:
 #. **Collections**: a ``listing`` block running the Collection's own query.
    Path criteria are rewritten to a site path below the subsite.
 #. **Default pages**: a Folder gets its default page's body appended to its
-   blocks (Volto shows a container's own blocks). The default page is exported
-   as well, so links to it keep working.
+   blocks (Volto shows a container's own blocks). When the default page is a
+   Collection, the Folder also gets the Collection's listing block (as in
+   step 7), so it lists the same items as before (e.g.
+   ``/reports-letters/plenary-meetings``). The default page is exported as
+   well, so links to it keep working.
 #. **Inline images** become ``image`` blocks before their paragraph; image
    URLs are normalized to ``/resolveuid/<uid>[/@@images/image/<scale>]``.
 #. **Image floats**: ``align`` is taken from the source HTML (an inline

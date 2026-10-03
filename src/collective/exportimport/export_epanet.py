@@ -122,7 +122,7 @@ class ExportCustomContent(ExportContent):
             target_root=self.target_root,
             convert=self._html_to_blocks,
             old_site_path="/".join(portal.getPhysicalPath()),
-            default_page_html=self._default_page_html,
+            default_page=self._default_page,
             resolve_uid=self._resolve_uid,
             site_default_page=self._default_page_id(portal),
             teaser_page=self.TEASER_PAGE,
@@ -281,16 +281,6 @@ class ExportCustomContent(ExportContent):
     # Context callbacks: what the transforms need from the source site
     # ----------------------------------------------------------------------
 
-    def _extract_html(self, obj):
-        """Return the raw HTML of a live object's rich text field."""
-        text_field = getattr(obj, "text", None)
-        if hasattr(text_field, "raw"):
-            # DX RichTextValue; raw keeps resolveuid links, like the export.
-            return text_field.raw or ""
-        if isinstance(text_field, str):
-            return text_field
-        return ""
-
     def _default_page_id(self, obj):
         """Id of a folderish object's default page, or None."""
         get_default_page = getattr(obj, "getDefaultPage", None)
@@ -302,8 +292,12 @@ class ExportCustomContent(ExportContent):
             return page_id
         return None
 
-    def _default_page_html(self, item):
-        """HTML of the default page of the Folder ``item`` was serialized from."""
+    def _default_page(self, item):
+        """The default page of the Folder ``item`` was serialized from.
+
+        Serialized like an exported item; during the export the request
+        carries the raw rich text marker, so ``text`` keeps resolveuid links.
+        """
         obj = api.content.get(UID=item.get("UID")) if item.get("UID") else None
         if obj is None:
             return None
@@ -311,7 +305,8 @@ class ExportCustomContent(ExportContent):
         if not page_id:
             return None
         logger.info("Merging default page %s into %s", page_id, obj.absolute_url())
-        return self._extract_html(obj[page_id])
+        serializer = getMultiAdapter((obj[page_id], self.request), ISerializeToJson)
+        return serializer(include_items=False)
 
     def _resolve_uid(self, uid):
         """Target URL of the source object with this UID, or None."""
