@@ -100,23 +100,6 @@ Reports are written to ``<clienthome>/custom-export-reports/`` (or
 ``MIGRATION_REPORT.md`` (counts, converter failures, transform errors, Slate
 elements without text).
 
-The view replaces the scripts that were run by hand on an ``@@export_content``
-file in ``eea.docker.plonesaas/scripts``:
-
-================================  ==============================================
-Script                            Now done by
-================================  ==============================================
-``validate_export.py``            ``MIGRATION_REPORT.md`` / ``manifest.json``
-``epanet_migrate.py``             steps 3 to 9
-``apply_news_default_blocks.py``  step 6 (no trailing listing block)
-``remove_listing_blocks.py``      step 6 (no listing block is added)
-``fix_news_image_alignment.py``   step 10, from the source HTML instead of the
-                                  rendered production pages
-``build_teaser_grid.py``          step 11
-``make_subsite_update.py``        step 13, in the same file
-``split_transformed_json.py``     not needed; import a large file from the
-                                  server (see below)
-================================  ==============================================
 
 Views and parameters
 --------------------
