@@ -106,11 +106,12 @@ Views and parameters
 
 ``@@export_epanet``
     The EPANET export with the defaults below.
-``@@export_newsItem``
-    The same, News Items only.
-``@@export_custom_content`` / ``@@export_custom_newsItem``
+``@@export_custom_content``
     The same pipeline without EPANET defaults: ``target_root`` is required,
     no teaser grid, no default ``subsite_parent_uid``.
+
+To export only some types (e.g. News Items), select just those types on the
+form.
 
 Request parameters (add them to the URL; the form keeps them when submitted),
 with their ``@@export_epanet`` defaults:
@@ -128,8 +129,6 @@ with their ``@@export_epanet`` defaults:
     Also export private items. Default off; private Links are always exported.
 ``old_root``
     URL of the source site root. Default: the portal URL.
-``p``, ``nrOfHits``
-    Export only page ``p`` of ``nrOfHits`` items. Default off.
 
 Only paths matter on import, not hosts: parents are found by UID, or by their
 path relative to the site root (``/en/epanet/...``). The default
@@ -287,8 +286,6 @@ Files on this branch
     ``ExportCustomContent`` (``@@export_custom_content``) and ``ExportEpanet``
     (``@@export_epanet``): filtering, the transform call, the ``Context``
     callbacks (converter, default page HTML, UID lookup), reports.
-``src/collective/exportimport/export_newsitem.py``
-    The News Item-only views.
 ``src/collective/exportimport/configure.zcml``
     Registers the views above.
 ``src/collective/exportimport/templates/export_content.pt``

@@ -36,22 +36,6 @@
       />
 
   <browser:page
-      name="export_custom_newsItem"
-      for="zope.interface.Interface"
-      class=".export_newsitem.ExportNewsItem"
-      template="templates/export_content.pt"
-      permission="cmf.ManagePortal"
-      />
-
-  <browser:page
-      name="export_newsItem"
-      for="zope.interface.Interface"
-      class=".export_newsitem.ExportEpanetNewsItem"
-      template="templates/export_content.pt"
-      permission="cmf.ManagePortal"
-      />
-
-  <browser:page
       zcml:condition="installed Products.ATContentTypes.content.topic"
       name="export_content"
       for="Products.ATContentTypes.interfaces.IATTopic"
@@ -153,16 +137,7 @@
   <configure zcml:condition="installed Products.Archetypes.atapi">
     <adapter zcml:condition="installed plone.app.contenttypes"
         factory=".serializer.SerializeTopicToJson" />
-  
-  <browser:page
-      name="fix_inline_images"
-      for="zope.interface.Interface"
-      class=".fix_inline_images.FixInlineImages"
-      template="templates/fix_inline_images.pt"
-      permission="cmf.ManagePortal"
-      />
-
-</configure>
+  </configure>
 
   <!--
     We check for a subpackage of plone.app.blob to avoid false positives
@@ -305,15 +280,6 @@
       for="zope.interface.Interface"
       class=".fix_html.FixHTML"
       template="templates/export_other.pt"
-      permission="cmf.ManagePortal"
-      />
-
-
-  <browser:page
-      name="fix_inline_images"
-      for="zope.interface.Interface"
-      class=".fix_inline_images.FixInlineImages"
-      template="templates/fix_inline_images.pt"
       permission="cmf.ManagePortal"
       />
 
